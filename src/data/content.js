@@ -1,10 +1,10 @@
 import {
-  HiOutlineClipboardDocumentCheck,
-  HiOutlineBookOpen,
-  HiOutlineViewfinderCircle,
-  HiOutlineCpuChip,
-  HiOutlineBriefcase,
-  HiOutlineUserGroup,
+  HiClipboardDocumentCheck,
+  HiBookOpen,
+  HiViewfinderCircle,
+  HiCpuChip,
+  HiBriefcase,
+  HiUserGroup,
   HiOutlineAcademicCap,
   HiOutlineChartBar,
   HiOutlineGlobeAlt,
@@ -12,42 +12,42 @@ import {
 
 export const features = [
   {
-    icon: HiOutlineClipboardDocumentCheck,
+    icon: HiClipboardDocumentCheck,
     title: "AI Assessment",
     description: "Discover your strengths and get a personalized learning path.",
   },
   {
-    icon: HiOutlineBookOpen,
+    icon: HiBookOpen,
     title: "Learning Academy",
     description: "Expert-designed courses in high-demand fields with microlearning.",
   },
   {
-    icon: HiOutlineViewfinderCircle,
+    icon: HiViewfinderCircle,
     title: "Simulations",
     description: "Learn by doing with real-world simulations that build job-ready skills.",
     badge: "85%",
   },
   {
-    icon: HiOutlineCpuChip,
+    icon: HiCpuChip,
     title: "AI Career Coach",
     description: "Get 24/7 AI guidance on skills, careers, and your next best steps.",
   },
   {
-    icon: HiOutlineBriefcase,
+    icon: HiBriefcase,
     title: "Career Center",
     description: "Connect with top employers and find the right opportunities.",
   },
   {
-    icon: HiOutlineUserGroup,
+    icon: HiUserGroup,
     title: "Jobs & Projects",
     description: "Access remote jobs and projects from U.S. companies.",
   },
 ];
 
 export const stats = [
-  { icon: HiOutlineUserGroup, value: "100,000+", label: "Active Learners" },
+  { icon: HiUserGroup, value: "100,000+", label: "Active Learners" },
   { icon: HiOutlineAcademicCap, value: "93%", label: "Course Completion Rate" },
-  { icon: HiOutlineBriefcase, value: "85%", label: "Simulation-Based Learning" },
+  { icon: HiBriefcase, value: "85%", label: "Simulation-Based Learning" },
   { icon: HiOutlineChartBar, value: "72%", label: "Job Placement Rate" },
   { icon: HiOutlineGlobeAlt, value: "1,500+", label: "Partner Companies" },
 ];

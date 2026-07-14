@@ -13,6 +13,7 @@ export default function SignupPage() {
           Full name
           <input
             type="text"
+            placeholder="Jane Doe"
             className="rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </label>
@@ -20,6 +21,7 @@ export default function SignupPage() {
           Email
           <input
             type="email"
+            placeholder="you@example.com"
             className="rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </label>
@@ -27,6 +29,7 @@ export default function SignupPage() {
           Password
           <input
             type="password"
+            placeholder="Create a password"
             className="rounded-lg border border-border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </label>

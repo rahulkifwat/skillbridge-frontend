@@ -8,7 +8,7 @@ const PROGRESS = 0.85;
 
 export default function LearnByDoingSection() {
   return (
-    <section className="bg-surface py-16 sm:py-20">
+    <section className="bg-surface py-12 sm:py-16">
       <Container>
         <div className="grid grid-cols-1 items-center gap-8 rounded-2xl bg-navy p-8 text-white sm:p-10 lg:grid-cols-[auto_auto_1fr] lg:gap-12">
           <div className="hidden h-24 w-24 items-center justify-center rounded-full bg-navy-soft lg:flex">

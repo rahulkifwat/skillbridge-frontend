@@ -14,7 +14,7 @@ export default function FeatureGridSection() {
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div
+              <div F
                 key={feature.title}
                 className="relative flex flex-col gap-3 rounded-xl border border-border bg-white p-5 shadow-sm"
               >
@@ -23,10 +23,10 @@ export default function FeatureGridSection() {
                     {feature.badge}
                   </span>
                 )}
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-light text-primary">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <h3 className="text-sm font-semibold text-heading">{feature.title}</h3>
+                <Icon className="h-8 w-8 text-primary" aria-hidden="true" />
+                <h3 className="text-sm font-semibold text-heading">
+                  {feature.title}
+                </h3>
                 <p className="text-sm text-body">{feature.description}</p>
               </div>
             );
