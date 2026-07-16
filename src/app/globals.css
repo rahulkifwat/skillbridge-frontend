@@ -11,12 +11,36 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Portal / app palette (dashboards, exam). Do not repurpose — the portal
+     screens are designed around this blue. */
   --color-primary: #2563eb;
   --color-primary-hover: #1d4ed8;
   --color-primary-light: #eff6ff;
 
   --color-navy: #0b1330;
   --color-navy-soft: #131b3a;
+
+  /* Marketing palette (public site): teal brand on deep navy. */
+  --color-brand: #0d9488;
+  --color-brand-hover: #0f766e;
+  --color-brand-bright: #14b8a6;
+  --color-brand-mint: #2dd4bf;
+  --color-brand-light: #f0fdfa;
+
+  --color-ink: #0a1628;
+  --color-ink-soft: #10233a;
+  --color-ink-line: #1e3a52;
+
+  /* Per-academy accents, used across academy/pricing/certification cards. */
+  --color-academy-english: #6d28d9;
+  --color-academy-software: #1d4ed8;
+  --color-academy-ai: #047857;
+  --color-academy-tech: #ea580c;
+  --color-academy-cultural: #0d9488;
+  --color-academy-career: #7c3aed;
+  --color-academy-remote: #1e40af;
+  --color-academy-path: #db2777;
+  --color-academy-continuing: #a16207;
 
   --color-accent: #10b981;
   --color-accent-light: #ecfdf5;

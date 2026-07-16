@@ -1,49 +1,47 @@
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Assessment", href: "/assessment" },
-  { label: "Learning Academy", href: "/learning-academy" },
   {
-    label: "Simulations",
-    href: "/simulations",
+    label: "Academies",
+    href: "/academies",
     children: [
-      { label: "Business Simulations", href: "/simulations/business" },
-      { label: "Tech Simulations", href: "/simulations/tech" },
-      { label: "Sales Simulations", href: "/simulations/sales" },
+      { label: "English Academy", href: "/academies" },
+      { label: "Software Academy", href: "/academies" },
+      { label: "AI & Data Academy", href: "/academies" },
+      { label: "All Academies", href: "/academies" },
     ],
   },
-  { label: "AI Coach", href: "/ai-coach" },
-  { label: "Career Center", href: "/career-center" },
-  { label: "Jobs", href: "/jobs" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Career Paths", href: "/career-paths" },
+  { label: "Job Opportunities", href: "/job-opportunities" },
+  { label: "Career Assessment", href: "/career-assessment" },
+  { label: "Certifications", href: "/certifications" },
+  { label: "Success Stories", href: "/success-stories" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Help Center", href: "/help-center" },
 ];
 
 export const footerLinks = [
   {
-    heading: "Platform",
+    heading: "Academies",
     links: [
-      { label: "Assessment", href: "/assessment" },
-      { label: "Learning Academy", href: "/learning-academy" },
-      { label: "Simulations", href: "/simulations" },
-      { label: "AI Coach", href: "/ai-coach" },
-      { label: "Career Center", href: "/career-center" },
+      { label: "English Academy", href: "/academies" },
+      { label: "Software Academy", href: "/academies" },
+      { label: "AI & Data Academy", href: "/academies" },
+      { label: "All Academies", href: "/academies" },
     ],
   },
   {
     heading: "Resources",
     links: [
       { label: "Blog", href: "/blog" },
-      { label: "Success Stories", href: "/success-stories" },
-      { label: "Help Center", href: "/help-center" },
       { label: "Guides", href: "/guides" },
-      { label: "Webinars", href: "/webinars" },
+      { label: "Help Center", href: "/help-center" },
+      { label: "Student Support", href: "/help-center" },
     ],
   },
   {
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Our Mission", href: "/mission" },
       { label: "Careers", href: "/careers" },
       { label: "Partners", href: "/partners" },
       { label: "Contact Us", href: "/contact" },
@@ -52,16 +50,17 @@ export const footerLinks = [
   {
     heading: "Legal",
     links: [
+      { label: "Terms of Use", href: "/terms" },
       { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
-      { label: "Cookie Policy", href: "/cookies" },
+      { label: "Refund Policy", href: "/cookies" },
     ],
   },
 ];
 
 export const socialLinks = [
   { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
-  { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
-  { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
   { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
+  { label: "X", href: "https://x.com", icon: "x" },
+  { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
+  { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
 ];

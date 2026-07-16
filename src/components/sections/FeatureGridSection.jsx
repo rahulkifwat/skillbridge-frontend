@@ -14,7 +14,7 @@ export default function FeatureGridSection() {
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div F
+              <div  
                 key={feature.title}
                 className="relative flex flex-col gap-3 rounded-xl border border-border bg-white p-5 shadow-sm"
               >
