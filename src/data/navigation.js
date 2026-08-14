@@ -11,12 +11,11 @@ export const navLinks = [
     ],
   },
   { label: "Career Paths", href: "/career-paths" },
-  { label: "Job Opportunities", href: "/job-opportunities" },
-  { label: "Career Assessment", href: "/career-assessment" },
-  { label: "Certifications", href: "/certifications" },
-  { label: "Success Stories", href: "/success-stories" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Help Center", href: "/help-center" },
+  { label: "Career Assessment", href: "/assessment" },
+  { label: "About Us", href: "/about" },
+  { label: "Roadmap", href: "/#roadmap" },
+  { label: "Resources", href: "/guides" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const footerLinks = [

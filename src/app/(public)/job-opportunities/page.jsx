@@ -441,7 +441,7 @@ export default function JobOpportunitiesPage() {
           <CtaBanner
             title="Your global career starts today."
             subtitle="Get trained. Get certified. Get hired."
-            primary={{ label: "Take Free Career Assessment", href: "/career-assessment" }}
+            primary={{ label: "Start Your Career Assessment — $25", href: "/assessment" }}
             secondary={{ label: "Explore Career Paths", href: "/career-paths" }}
             features={ctaAssurances}
           />

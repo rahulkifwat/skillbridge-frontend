@@ -48,7 +48,7 @@ export const stats = [
   { icon: HiUserGroup, value: "100,000+", label: "Active Learners" },
   { icon: HiOutlineAcademicCap, value: "93%", label: "Course Completion Rate" },
   { icon: HiBriefcase, value: "85%", label: "Simulation-Based Learning" },
-  { icon: HiOutlineChartBar, value: "72%", label: "Job Placement Rate" },
+  { icon: HiOutlineChartBar, value: "9", label: "Career-Focused Academies" },
   { icon: HiOutlineGlobeAlt, value: "1,500+", label: "Partner Companies" },
 ];
 

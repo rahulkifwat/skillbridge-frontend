@@ -80,10 +80,10 @@ export default function Navbar() {
             Log In
           </Link>
           <Link
-            href="/enroll"
+            href="/assessment"
             className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-hover"
           >
-            Enroll Now
+            Start Assessment — $25
           </Link>
         </div>
 
@@ -120,11 +120,11 @@ export default function Navbar() {
                 Log In
               </Link>
               <Link
-                href="/enroll"
+                href="/assessment"
                 className="rounded-lg bg-brand px-4 py-2 text-center text-sm font-semibold text-white"
                 onClick={() => setMobileOpen(false)}
               >
-                Enroll Now
+                Start Assessment — $25
               </Link>
             </div>
           </div>

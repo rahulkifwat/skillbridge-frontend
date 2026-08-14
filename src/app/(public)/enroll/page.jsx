@@ -221,7 +221,7 @@ export default function EnrollPage() {
               <div>
                 <h2 className="text-2xl font-bold sm:text-3xl">Our mission is your success.</h2>
                 <p className="mt-3 text-sm text-white/70">
-                  Join thousands of students building their future with SkillBridge.
+                  Join SkillBridge’s founding cohort and begin building your future.
                 </p>
               </div>
 

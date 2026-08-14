@@ -250,7 +250,7 @@ export default function PricingPage() {
         <Container>
           <CtaBanner
             title="Ready to Start Your Journey?"
-            subtitle="Join thousands of students building global careers with SkillBridge EdTech."
+            subtitle="Choose the learning option that best supports your global career goals."
             primary={{ label: "Take Career Assessment", href: "/assessment" }}
             secondary={{ label: "Explore Academies", href: "/academies" }}
             features={pricingCtaStats}

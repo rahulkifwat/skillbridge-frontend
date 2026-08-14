@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const THEMES = {
   dark: {
@@ -26,9 +27,16 @@ function NavList({ items, theme }) {
     <ul className="flex flex-col gap-1">
       {items.map((item) => {
         const Icon = item.icon;
+        // Items with an `href` navigate; the rest stay decorative, as the
+        // original dashboard mockups had them.
+        const Tag = item.href ? Link : "span";
+        const tagProps = item.href ? { href: item.href } : {};
+
         return (
           <li key={item.label}>
-            <span
+            <Tag
+              {...tagProps}
+              aria-current={item.active ? "page" : undefined}
               className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 item.active ? theme.itemActive : theme.itemIdle
               }`}
@@ -44,7 +52,7 @@ function NavList({ items, theme }) {
                   {item.badge}
                 </span>
               )}
-            </span>
+            </Tag>
           </li>
         );
       })}
@@ -56,6 +64,7 @@ export default function PortalSidebar({
   variant = "light",
   brandLabel,
   brandSub,
+  tagline,
   nav,
   sections = [],
   widgets,
@@ -70,10 +79,16 @@ export default function PortalSidebar({
           <Image src="/skillbridge-logo-mark.png" alt="SkillBridge" width={1231} height={698} className="h-8 w-auto" />
         </span>
         <span className="flex flex-col leading-tight">
-          <span className={`text-lg font-bold ${variant === "dark" ? "text-white" : "text-heading"}`}>SkillBridge</span>
+          <span className={`text-lg font-bold ${variant === "dark" ? "text-white" : "text-heading"}`}>
+            Skill<span className="text-amber">Bridge</span>
+          </span>
           {brandSub && <span className={`text-[10px] ${theme.brandSub}`}>{brandSub}</span>}
         </span>
       </div>
+
+      {tagline && (
+        <p className={`px-5 pb-5 text-xs leading-relaxed ${theme.brandSub}`}>{tagline}</p>
+      )}
 
       <div className="flex-1 overflow-y-auto px-3 pb-4">
         {brandLabel && (

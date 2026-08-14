@@ -234,7 +234,7 @@ export const topCompanies = [
 export const ctaAssurances = [
   {
     icon: HiClipboardDocumentCheck,
-    title: "Free Career Assessment",
+    title: "Career Assessment — $25",
     detail: "Discover your best path",
   },
   {
@@ -244,7 +244,7 @@ export const ctaAssurances = [
   },
   {
     icon: HiShieldCheck,
-    title: "Industry Certifications",
+    title: "Career-Ready Skills",
     detail: "Boost your employability",
   },
   {

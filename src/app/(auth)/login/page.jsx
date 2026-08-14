@@ -1,19 +1,17 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import {
-  HiEnvelope,
-  HiLockClosed,
-  HiEye,
   HiShieldCheck,
   HiAcademicCap,
   HiBriefcase,
   HiDocumentCheck,
   HiChartBar,
 } from "react-icons/hi2";
-import { FaGoogle, FaMicrosoft, FaApple } from "react-icons/fa6";
 import BrandLogo from "@/components/common/BrandLogo";
 import Button from "@/components/common/Button";
 import Avatar from "@/components/common/Avatar";
 import DarkSection from "@/components/marketing/DarkSection";
+import LoginForm from "@/components/auth/LoginForm";
 
 export const metadata = {
   title: "Log In | SkillBridge",
@@ -42,12 +40,6 @@ const FEATURES = [
     title: "Track Your Progress",
     body: "Monitor your growth and achieve your career goals.",
   },
-];
-
-const SOCIAL_PROVIDERS = [
-  { icon: FaGoogle, label: "Continue with Google" },
-  { icon: FaMicrosoft, label: "Continue with Microsoft" },
-  { icon: FaApple, label: "Continue with Apple" },
 ];
 
 export default function LoginPage() {
@@ -123,104 +115,16 @@ export default function LoginPage() {
         </div>
 
         <div className="flex flex-1 items-center justify-center py-10">
-          <div className="w-full max-w-md rounded-2xl border border-border bg-white p-8 shadow-sm">
-            <div className="flex flex-col gap-1">
-              <h2 className="text-3xl font-bold tracking-tight text-heading">Log In</h2>
-              <p className="text-sm text-body">
-                Access your account and continue your journey.
-              </p>
-            </div>
+          <div className="flex w-full max-w-md flex-col gap-6">
+            <Suspense
+              fallback={
+                <div className="h-[520px] w-full animate-pulse rounded-2xl border border-border bg-white" />
+              }
+            >
+              <LoginForm />
+            </Suspense>
 
-            <form className="mt-6 flex flex-col gap-5">
-              <div className="flex flex-col gap-1.5">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-semibold text-heading"
-                >
-                  Email Address
-                </label>
-                <div className="relative">
-                  <HiEnvelope
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
-                  />
-                  <input
-                    id="email"
-                    type="email"
-                    readOnly
-                    placeholder="Enter your email"
-                    className="w-full rounded-lg border border-border bg-white py-3 pl-11 pr-3 text-sm text-heading placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-brand"
-                  />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-semibold text-heading"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <HiLockClosed
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
-                  />
-                  <input
-                    id="password"
-                    type="password"
-                    readOnly
-                    placeholder="Enter your password"
-                    className="w-full rounded-lg border border-border bg-white py-3 pl-11 pr-11 text-sm text-heading placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-brand"
-                  />
-                  <HiEye
-                    aria-hidden="true"
-                    className="pointer-events-none absolute right-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between gap-4">
-                <span className="flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="h-4 w-4 shrink-0 rounded border border-border bg-white"
-                  />
-                  <span className="text-sm text-body">Remember me</span>
-                </span>
-                <Link
-                  href="/forgot-password"
-                  className="text-sm font-medium text-brand hover:text-brand-hover"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <Button type="submit" variant="brand" className="w-full">
-                Log In
-              </Button>
-            </form>
-
-            <div className="my-6 flex items-center gap-4">
-              <span className="h-px flex-1 bg-border" />
-              <span className="text-xs text-muted">or continue with</span>
-              <span className="h-px flex-1 bg-border" />
-            </div>
-
-            <div className="flex flex-col gap-3">
-              {SOCIAL_PROVIDERS.map(({ icon: Icon, label }) => (
-                <button
-                  key={label}
-                  type="button"
-                  className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-white px-5 py-3 text-sm font-semibold text-heading transition-colors hover:bg-surface"
-                >
-                  <Icon aria-hidden="true" className="h-4 w-4" />
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <p className="mt-6 flex items-center justify-center gap-2 text-sm text-body">
+            <p className="flex items-center justify-center gap-2 text-sm text-body">
               <HiShieldCheck aria-hidden="true" className="h-5 w-5 text-brand" />
               Your data is secure with us.
             </p>

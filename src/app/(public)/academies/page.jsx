@@ -100,8 +100,8 @@ export default function AcademiesPage() {
         <Container>
           <CtaBanner
             title="Not sure which academy is right for you?"
-            subtitle="Take our free career assessment and get a personalized learning plan tailored to your goals."
-            primary={{ label: "Take Free Career Assessment", href: "/assessment" }}
+            subtitle="Take the $25 Career Assessment and get a personalized learning direction tailored to your goals."
+            primary={{ label: "Start Your Career Assessment — $25", href: "/assessment" }}
             secondary={{ label: "View Career Paths", href: "/career-center" }}
             icon={
               <span className="inline-flex h-16 w-16 items-center justify-center rounded-xl border border-white/15 bg-white/5">

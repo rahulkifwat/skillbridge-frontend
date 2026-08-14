@@ -38,55 +38,110 @@ function ViewAll({ href, label }) {
   );
 }
 
+// Embossed gold award seal built from an SVG starburst + medallion + ribbon.
+function AwardSeal() {
+  // 16-point scalloped starburst (alternating outer/inner radius).
+  const burst = Array.from({ length: 32 }, (_, i) => {
+    const angle = (Math.PI * 2 * i) / 32 - Math.PI / 2;
+    const r = i % 2 === 0 ? 38 : 31;
+    return `${(40 + r * Math.cos(angle)).toFixed(1)},${(40 + r * Math.sin(angle)).toFixed(1)}`;
+  }).join(" ");
+
+  return (
+    <svg viewBox="0 0 80 96" className="h-20 w-16" aria-hidden="true">
+      <defs>
+        <radialGradient id="cert-gold" cx="38%" cy="34%" r="70%">
+          <stop offset="0%" stopColor="#fef3c7" />
+          <stop offset="45%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#b45309" />
+        </radialGradient>
+        <linearGradient id="cert-ribbon" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#c2410c" />
+          <stop offset="100%" stopColor="#9a3412" />
+        </linearGradient>
+      </defs>
+      {/* ribbon tails */}
+      <path d="M30 62 L26 92 L36 84 L40 92 L40 62 Z" fill="url(#cert-ribbon)" />
+      <path d="M50 62 L54 92 L44 84 L40 92 L40 62 Z" fill="url(#cert-ribbon)" />
+      {/* starburst + medallion */}
+      <polygon points={burst} fill="#d97706" />
+      <circle cx="40" cy="40" r="29" fill="url(#cert-gold)" />
+      <circle cx="40" cy="40" r="29" fill="none" stroke="#fde68a" strokeWidth="1.5" strokeOpacity="0.7" />
+      <circle cx="40" cy="40" r="22" fill="none" stroke="#92400e" strokeWidth="1" strokeOpacity="0.5" />
+      {/* inner star */}
+      <polygon
+        points={Array.from({ length: 10 }, (_, i) => {
+          const angle = (Math.PI * 2 * i) / 10 - Math.PI / 2;
+          const r = i % 2 === 0 ? 12 : 5;
+          return `${(40 + r * Math.cos(angle)).toFixed(1)},${(40 + r * Math.sin(angle)).toFixed(1)}`;
+        }).join(" ")}
+        fill="#fffbeb"
+        fillOpacity="0.9"
+      />
+    </svg>
+  );
+}
+
+// Decorative L-shaped corner flourish for the certificate frame.
+function CornerFlourish({ className }) {
+  return (
+    <span aria-hidden="true" className={`pointer-events-none absolute h-6 w-6 border-brand/50 ${className}`} />
+  );
+}
+
 // Paper-styled mock of the certificate shown in the hero. Purely decorative
 // markup — no image assets exist in this project.
 function CertificatePreview() {
   const c = certificatePreview;
   return (
-    <div className="mx-auto w-full max-w-md rounded-lg bg-white p-2 shadow-2xl shadow-black/40">
-      <div className="rounded-md border-2 border-brand/20 px-5 py-6 text-center sm:px-8 sm:py-8">
-        <div className="flex items-center justify-center gap-2 text-left">
-          <HiCheckBadge className="h-5 w-5 text-brand" aria-hidden="true" />
-          <span className="leading-none">
-            <span className="block text-sm font-bold text-heading">{c.brand}</span>
-            <span className="block text-[9px] font-medium text-muted">{c.brandSub}</span>
-          </span>
-        </div>
+    <div className="mx-auto w-full max-w-md rotate-1 rounded-lg bg-white p-2.5 shadow-2xl shadow-black/50">
+      {/* Outer gold frame */}
+      <div className="relative rounded-md border-[3px] border-double border-amber-500/60 bg-[#fffdf7] p-1.5">
+        {/* Inner hairline frame with corner flourishes */}
+        <div className="relative rounded-sm border border-brand/25 px-5 py-6 text-center sm:px-8 sm:py-7">
+          <CornerFlourish className="left-1.5 top-1.5 border-l-2 border-t-2" />
+          <CornerFlourish className="right-1.5 top-1.5 border-r-2 border-t-2" />
+          <CornerFlourish className="bottom-1.5 left-1.5 border-b-2 border-l-2" />
+          <CornerFlourish className="bottom-1.5 right-1.5 border-b-2 border-r-2" />
 
-        <h3 className="mt-5 text-xl font-bold tracking-[0.15em] text-heading sm:text-2xl">
-          {c.title}
-        </h3>
-        <p className="mt-1 text-[10px] font-medium tracking-[0.3em] text-muted">{c.subtitle}</p>
-
-        <p className="mt-5 text-[10px] text-muted">{c.intro}</p>
-        <p className="mt-2 font-serif text-xl italic text-brand sm:text-2xl">{c.recipient}</p>
-
-        <p className="mt-4 text-[10px] text-muted">{c.completion}</p>
-        <p className="mt-1.5 text-sm font-semibold text-heading">{c.program}</p>
-
-        <p className="mt-3 text-[10px] text-muted">{c.recognition}</p>
-        <p className="mt-1 text-xs font-medium text-body">{c.designation}</p>
-
-        {/* Seal */}
-        <div className="mt-5 flex items-center justify-center">
-          <span
-            aria-hidden="true"
-            className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-600 ring-4 ring-amber-200/60"
-          >
-            <span className="h-8 w-8 rounded-full border-2 border-dashed border-amber-100/80" />
-          </span>
-        </div>
-
-        <div className="mt-5 flex items-end justify-between gap-4 text-left">
-          <div className="min-w-0">
-            <p className="text-[10px] text-body">{c.date}</p>
-            <p className="mt-1 border-t border-border pt-1 text-[9px] text-muted">{c.dateLabel}</p>
+          <div className="flex items-center justify-center gap-2">
+            <HiCheckBadge className="h-5 w-5 text-brand" aria-hidden="true" />
+            <span className="text-left leading-none">
+              <span className="block text-sm font-bold text-ink">{c.brand}</span>
+              <span className="block text-[9px] font-medium text-brand">{c.brandSub}</span>
+            </span>
           </div>
-          <div className="min-w-0 text-right">
-            <p className="font-serif text-sm italic text-heading">{c.signatory}</p>
-            <p className="mt-1 border-t border-border pt-1 text-[9px] text-muted">
-              {c.signatory}, {c.signatoryRole}
-            </p>
+
+          <h3 className="mt-5 font-serif text-2xl font-bold tracking-[0.18em] text-ink sm:text-[1.7rem]">
+            {c.title}
+          </h3>
+          <p className="mt-1 text-[10px] font-medium tracking-[0.35em] text-muted">{c.subtitle}</p>
+
+          <p className="mt-5 text-[10px] italic text-muted">{c.intro}</p>
+          <p className="mt-2 font-serif text-[1.6rem] italic leading-tight text-ink">{c.recipient}</p>
+          <span className="mx-auto mt-1 block h-px w-40 bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+
+          <p className="mt-4 text-[10px] text-muted">{c.completion}</p>
+          <p className="mt-1.5 text-sm font-bold text-brand">{c.program}</p>
+
+          <p className="mt-3 text-[10px] text-muted">{c.recognition}</p>
+          <p className="mt-1 text-xs font-medium text-body">{c.designation}</p>
+
+          <div className="mt-3 flex justify-center">
+            <AwardSeal />
+          </div>
+
+          <div className="mt-3 flex items-end justify-between gap-4 text-left">
+            <div className="min-w-0">
+              <p className="text-[10px] text-body">{c.date}</p>
+              <p className="mt-1 border-t border-border pt-1 text-[9px] text-muted">{c.dateLabel}</p>
+            </div>
+            <div className="min-w-0 text-right">
+              <p className="font-serif text-sm italic text-ink">{c.signatory}</p>
+              <p className="mt-1 border-t border-border pt-1 text-[9px] text-muted">
+                {c.signatory}, {c.signatoryRole}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -102,7 +157,7 @@ export default function CertificationsPage() {
         <Container className="py-14 lg:py-16">
           <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             {/* Headline + features */}
-            <div className="lg:col-span-4">
+            <div className="lg:col-span-5">
               <h1 className="text-4xl font-bold leading-tight sm:text-5xl">
                 Get Certified.
                 <br />
@@ -113,7 +168,7 @@ export default function CertificationsPage() {
                 top global opportunities.
               </p>
 
-              <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-2">
+              <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-4">
                 {heroFeatures.map((f) => {
                   const Icon = f.icon;
                   return (
@@ -130,7 +185,7 @@ export default function CertificationsPage() {
             </div>
 
             {/* Certificate */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-4">
               <CertificatePreview />
             </div>
 

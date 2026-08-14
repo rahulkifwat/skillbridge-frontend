@@ -142,11 +142,11 @@ export const topCareers = [
 ];
 
 export const homeStats = [
-  { value: "50,000+", label: "Active Students", icon: HiUsers },
-  { value: "120+", label: "Countries", icon: HiGlobeAlt },
-  { value: "500+", label: "Hiring Partners", icon: HiBuildingOffice2 },
-  { value: "85%", label: "Hire Rate", icon: HiTrophy },
-  { value: "$2,000+", label: "Avg. Monthly Salary of Our Graduates", icon: HiBanknotes },
+  { value: "9", label: "Career-focused academies", icon: HiUsers },
+  { value: "10", label: "Career pathways", icon: HiGlobeAlt },
+  { value: "2026", label: "Planned platform launch", icon: HiBuildingOffice2 },
+  { value: "AI", label: "Learning and practice support", icon: HiTrophy },
+  { value: "Global", label: "Career-ready learning vision", icon: HiBanknotes },
 ];
 
 export const howItWorks = [
@@ -160,7 +160,7 @@ export const howItWorks = [
 export const homeHeroFeatures = [
   { title: "100% Online", detail: "Learn Anywhere", icon: HiComputerDesktop },
   { title: "Hands-on Simulations", detail: "Practice Real Work", icon: HiPuzzlePiece },
-  { title: "Industry Certifications", detail: "Boost Your Resume", icon: HiShieldCheck },
+  { title: "Career-Ready Skills", detail: "Build confidence through practice", icon: HiShieldCheck },
   { title: "Global Job Opportunities", detail: "Work from Anywhere", icon: HiGlobeAlt },
 ];
 

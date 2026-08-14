@@ -293,7 +293,7 @@ export default function SuccessStoriesPage() {
         <div className="mt-8">
           <CtaBanner
             title="Your success story could be next."
-            subtitle="Join thousands of students building global careers with SkillBridge."
+            subtitle="Learn how SkillBridge is being designed to support global career preparation."
             primary={{
               label: "Take the Career Assessment",
               href: "/career-assessment",
