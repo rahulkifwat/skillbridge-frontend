@@ -1,10 +1,14 @@
-import PlaceholderPage from "@/components/common/PlaceholderPage";
+import { getServerTranslator } from "@/i18n/server";
+import AboutContent from "./AboutContent";
+
+export async function generateMetadata() {
+  const { t } = await getServerTranslator();
+  return {
+    title: t("about.meta.title"),
+    description: t("about.meta.description"),
+  };
+}
 
 export default function AboutPage() {
-  return (
-    <PlaceholderPage
-      title="About SkillBridge"
-      description="We're building the bridge between learning and real-world careers. Full page coming soon."
-    />
-  );
+  return <AboutContent />;
 }

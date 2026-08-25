@@ -77,6 +77,12 @@ export const authApi = {
   logout: () => apiRequest("/auth/logout", { method: "POST" }),
 };
 
+export const contactApi = {
+  submit: (payload) =>
+    apiRequest("/contact", { method: "POST", body: payload, auth: false }),
+  list: (params = "") => apiRequest(`/contact${params}`),
+};
+
 export const dashboardApi = {
   overview: () => apiRequest("/dashboard/overview"),
 };

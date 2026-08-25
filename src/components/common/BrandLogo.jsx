@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useT } from "@/context/LanguageContext";
 
 // Marketing-site lockup: inline suspension-bridge mark + wordmark.
 // Uses currentColor for the structure so it reads on both navy and white,
@@ -20,6 +23,7 @@ function BridgeMark({ className = "" }) {
 }
 
 export default function BrandLogo({ inverted = false, showTagline = false, href = "/", className = "" }) {
+  const t = useT();
   const wordColor = inverted ? "text-white" : "text-ink";
   const markColor = inverted ? "text-white" : "text-ink";
 
@@ -31,7 +35,7 @@ export default function BrandLogo({ inverted = false, showTagline = false, href 
         <span className="mt-0.5 text-xs font-semibold text-brand-bright">EdTech</span>
         {showTagline && (
           <span className={`mt-1 text-[10px] ${inverted ? "text-white/50" : "text-muted"}`}>
-            Future skills. Real practice. Real results.
+            {t("common.brandTagline")}
           </span>
         )}
       </span>

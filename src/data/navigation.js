@@ -1,57 +1,64 @@
+// `tKey` points at the dictionary entry for the label; `label` stays as the
+// English fallback so anything still reading it keeps working.
 export const navLinks = [
-  { label: "Home", href: "/" },
+  { tKey: "nav.home", label: "Home", href: "/" },
   {
+    tKey: "nav.academies",
     label: "Academies",
     href: "/academies",
     children: [
-      { label: "English Academy", href: "/academies" },
-      { label: "Software Academy", href: "/academies" },
-      { label: "AI & Data Academy", href: "/academies" },
-      { label: "All Academies", href: "/academies" },
+      { tKey: "nav.englishAcademy", label: "English Academy", href: "/academies" },
+      { tKey: "nav.softwareAcademy", label: "Software Academy", href: "/academies" },
+      { tKey: "nav.aiAcademy", label: "AI & Data Academy", href: "/academies" },
+      { tKey: "nav.allAcademies", label: "All Academies", href: "/academies" },
     ],
   },
-  { label: "Career Paths", href: "/career-paths" },
-  { label: "Career Assessment", href: "/assessment" },
-  { label: "About Us", href: "/about" },
-  { label: "Roadmap", href: "/#roadmap" },
-  { label: "Resources", href: "/guides" },
-  { label: "Contact", href: "/contact" },
+  { tKey: "nav.careerPaths", label: "Career Paths", href: "/career-paths" },
+  { tKey: "nav.careerAssessment", label: "Career Assessment", href: "/assessment" },
+  { tKey: "nav.about", label: "About Us", href: "/about" },
+  { tKey: "nav.roadmap", label: "Roadmap", href: "/#roadmap" },
+  { tKey: "nav.resources", label: "Resources", href: "/guides" },
+  { tKey: "nav.contact", label: "Contact", href: "/contact" },
 ];
 
 export const footerLinks = [
   {
+    tKey: "footer.academies",
     heading: "Academies",
     links: [
-      { label: "English Academy", href: "/academies" },
-      { label: "Software Academy", href: "/academies" },
-      { label: "AI & Data Academy", href: "/academies" },
-      { label: "All Academies", href: "/academies" },
+      { tKey: "nav.englishAcademy", label: "English Academy", href: "/academies" },
+      { tKey: "nav.softwareAcademy", label: "Software Academy", href: "/academies" },
+      { tKey: "nav.aiAcademy", label: "AI & Data Academy", href: "/academies" },
+      { tKey: "nav.allAcademies", label: "All Academies", href: "/academies" },
     ],
   },
   {
+    tKey: "footer.resources",
     heading: "Resources",
     links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Guides", href: "/guides" },
-      { label: "Help Center", href: "/help-center" },
-      { label: "Student Support", href: "/help-center" },
+      { tKey: "footer.blog", label: "Blog", href: "/blog" },
+      { tKey: "footer.guides", label: "Guides", href: "/guides" },
+      { tKey: "footer.helpCenter", label: "Help Center", href: "/help-center" },
+      { tKey: "footer.studentSupport", label: "Student Support", href: "/help-center" },
     ],
   },
   {
+    tKey: "footer.company",
     heading: "Company",
     links: [
-      { label: "About Us", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Partners", href: "/partners" },
-      { label: "Contact Us", href: "/contact" },
+      { tKey: "footer.about", label: "About Us", href: "/about" },
+      { tKey: "footer.careers", label: "Careers", href: "/careers" },
+      { tKey: "footer.partners", label: "Partners", href: "/partners" },
+      { tKey: "footer.contact", label: "Contact Us", href: "/contact" },
     ],
   },
   {
+    tKey: "footer.legal",
     heading: "Legal",
     links: [
-      { label: "Terms of Use", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Refund Policy", href: "/cookies" },
+      { tKey: "footer.terms", label: "Terms of Use", href: "/terms" },
+      { tKey: "footer.privacy", label: "Privacy Policy", href: "/privacy" },
+      { tKey: "footer.refunds", label: "Refund Policy", href: "/cookies" },
     ],
   },
 ];

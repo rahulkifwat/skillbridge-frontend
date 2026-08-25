@@ -1,10 +1,14 @@
-import PlaceholderPage from "@/components/common/PlaceholderPage";
+import { getServerTranslator } from "@/i18n/server";
+import ContactContent from "./ContactContent";
+
+export async function generateMetadata() {
+  const { t } = await getServerTranslator();
+  return {
+    title: t("contact.meta.title"),
+    description: t("contact.meta.description"),
+  };
+}
 
 export default function ContactPage() {
-  return (
-    <PlaceholderPage
-      title="Contact Us"
-      description="Have a question? Reach out and our team will get back to you shortly."
-    />
-  );
+  return <ContactContent />;
 }
