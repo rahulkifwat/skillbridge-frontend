@@ -7,6 +7,9 @@ export const navLinks = [
     label: "Academies",
     href: "/academies",
     children: [
+      // The Spanish Academy runs as its own premium path (/spanish) rather than
+      // a card on /academies — see the PRD addendum's routing split.
+      { tKey: "nav.spanishAcademy", label: "Spanish Academy", href: "/spanish" },
       { tKey: "nav.englishAcademy", label: "English Academy", href: "/academies" },
       { tKey: "nav.softwareAcademy", label: "Software Academy", href: "/academies" },
       { tKey: "nav.aiAcademy", label: "AI & Data Academy", href: "/academies" },
@@ -26,6 +29,7 @@ export const footerLinks = [
     tKey: "footer.academies",
     heading: "Academies",
     links: [
+      { tKey: "nav.spanishAcademy", label: "Spanish Academy", href: "/spanish" },
       { tKey: "nav.englishAcademy", label: "English Academy", href: "/academies" },
       { tKey: "nav.softwareAcademy", label: "Software Academy", href: "/academies" },
       { tKey: "nav.aiAcademy", label: "AI & Data Academy", href: "/academies" },

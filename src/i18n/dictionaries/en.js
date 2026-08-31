@@ -19,6 +19,7 @@ const en = {
   nav: {
     home: "Home",
     academies: "Academies",
+    spanishAcademy: "Spanish Academy",
     englishAcademy: "English Academy",
     softwareAcademy: "Software Academy",
     aiAcademy: "AI & Data Academy",
@@ -236,6 +237,245 @@ const en = {
     connect: {
       title: "Connect With SkillBridge",
       body: "We look forward to hearing from you and exploring opportunities to build stronger connections between skills, talent, education, and the global economy.",
+    },
+  },
+  spanish: {
+    meta: {
+      title: "Spanish Academy — SkillBridge EdTech",
+      description:
+        "Learn Spanish and gain the cultural confidence to connect, collaborate and succeed in Latin America and Spanish-speaking communities around the world.",
+    },
+    eyebrow: "Spanish Academy",
+    title: "Spanish Academy",
+    promiseOne: "Spanish Language. Latin American Culture.",
+    promiseTwo: "Real Communication. Real Opportunities.",
+    lead: "Learn Spanish and gain the cultural confidence to connect, collaborate and succeed in Latin America and Spanish-speaking communities around the world.",
+    corePromise: "Learn Spanish. Understand Cultures. Communicate with Confidence.",
+    motto: "Habla. Conecta. Triunfa.",
+    ctaPrimary: "Start My Assessment",
+    ctaSecondary: "See how the academy works",
+
+    pillars: {
+      simulations: {
+        title: "Interactive Simulations",
+        body: "Real conversations in real-life situations.",
+      },
+      cultural: {
+        title: "Cultural Intelligence",
+        body: "Understand customs, etiquette and business culture.",
+      },
+      professional: {
+        title: "Professional Spanish",
+        body: "Business, healthcare, customer service, travel and more.",
+      },
+      certification: {
+        title: "Competency-Based Credentials",
+        body: "Credentials earned by demonstrating skills, not by watching videos.",
+      },
+    },
+
+    philosophy: {
+      eyebrow: "How the academy works",
+      title: "You don't learn Spanish to finish lessons. You learn it to be understood.",
+      body: "Every module moves through the same cycle, so learning always ends in something you can actually do with the language.",
+      note: "This is an assessment-driven academy. You never pick a level from a dropdown — an adaptive assessment finds your starting point for you.",
+    },
+
+    journey: {
+      assess: { title: "Assess", body: "Establish your baseline proficiency and gaps." },
+      personalize: { title: "Personalize", body: "Tailor the curriculum, scenarios and support to you." },
+      learn: { title: "Learn", body: "Work through short, focused micro-learning content." },
+      practice: { title: "Practice", body: "Apply it in interactive exercises and drills." },
+      simulate: { title: "Simulate", body: "Handle immersive, real-world conversations." },
+      feedback: { title: "Receive feedback", body: "Review detailed metrics from the AI engine." },
+      improve: { title: "Improve", body: "Re-engage weak areas through targeted paths." },
+      demonstrate: { title: "Demonstrate competency", body: "Validate mastery through real assessments." },
+    },
+
+    entry: {
+      eyebrow: "Your first step",
+      title: "Before we begin, let's find your current Spanish level.",
+      body: "There is no need to know your level before you start. The assessment identifies the best starting point for you — it is not designed to eliminate anyone.",
+      profileTitle: "Your Spanish Profile",
+      profileNote: "An example of what you receive after the assessment.",
+      profileLevel: "Starting level",
+      profileLevelValue: "A2 — Emerging",
+      profileTrack: "Specialty track",
+      profileTrackValue: "Spanish for Law Enforcement",
+      profileStrengths: "Core strengths",
+      profileStrengthsValue: "Reading (B1), Writing (A2), Vocabulary (A2)",
+      profilePriorities: "Development priorities",
+      profilePrioritiesValue: "Speaking and pronunciation, fluency, cultural awareness",
+      profilePath: "Recommended path",
+      profilePathValue:
+        "General Spanish A2 + Spanish for Law Enforcement Contexts + Cultural Intelligence for Emergency Responders",
+    },
+
+    contexts: {
+      eyebrow: "Spanish for real life and real careers",
+      title: "Learn the Spanish your work actually needs",
+      business: {
+        title: "Business",
+        body: "Meetings, negotiations, presentations and emails.",
+      },
+      healthcare: {
+        title: "Healthcare",
+        body: "Communicate clearly with patients and families.",
+      },
+      customerService: {
+        title: "Customer Service",
+        body: "Serve Spanish-speaking customers with confidence.",
+      },
+      travel: {
+        title: "Travel & Relocation",
+        body: "Airports, hotels, banking, shopping and daily life.",
+      },
+      trade: {
+        title: "International Trade",
+        body: "Work with partners and clients across the region.",
+      },
+    },
+
+    practice: {
+      eyebrow: "Learn by doing",
+      title: "85% practice. 15% theory.",
+      body: "Video lessons are capped at two to three minutes. When one ends, you go straight into a live simulation — because the conversation is where the learning happens.",
+      tutor: { title: "AI-powered tutor 24/7", body: "Practise whenever it suits you, at your own pace." },
+      simulations: { title: "Realistic simulations", body: "Rehearse the conversations you will actually have." },
+      feedback: {
+        title: "Immediate feedback",
+        body: "The correction, the reason for it, then straight back into the scenario.",
+      },
+      progress: { title: "Track your progress", body: "See every competency move, not just a single score." },
+      results: { title: "Achieve real results", body: "Measure learning by what you can do in the real world." },
+      splitLabelPractice: "Practice",
+      splitLabelTheory: "Theory",
+    },
+
+    immersion: {
+      eyebrow: "Adaptive immersion",
+      title: "The interface learns Spanish at the same pace you do",
+      body: "Instruction starts in your own language and shifts into Spanish as your level rises, so you are always stretched but never lost.",
+      columnLevel: "Assigned level",
+      columnLanguage: "Instructional language",
+      columnExperience: "What changes",
+      spanishShare: "Spanish",
+      level0: {
+        level: "Absolute Beginner",
+        language: "100% English",
+        body: "Core features, rules and mechanics explained in your own language.",
+      },
+      a1: {
+        level: "Beginner (A1)",
+        language: "90% English / 10% Spanish",
+        body: "Fixed vocabulary and routine instructions, with hover tooltips for instant translation.",
+      },
+      a2: {
+        level: "Lower Intermediate (A2)",
+        language: "60% English / 40% Spanish",
+        body: "Navigation moves fully to Spanish; exercises use simplified Spanish sentences.",
+      },
+      b1: {
+        level: "Intermediate (B1)",
+        language: "30% English / 70% Spanish",
+        body: "All prompts and directions in Spanish; your language is kept for complex grammar.",
+      },
+      b2: {
+        level: "Upper Intermediate (B2)",
+        language: "10% English / 90% Spanish",
+        body: "High immersion. Native-language help is hidden until you ask for it.",
+      },
+      c1: {
+        level: "Advanced / Professional (C1+)",
+        language: "100% Spanish",
+        body: "The whole environment, including support, operates in Spanish.",
+      },
+    },
+
+    cultural: {
+      eyebrow: "Cultural training for Latin America",
+      title: "Language is only half of being understood",
+      etiquette: { title: "Business Etiquette", body: "Build strong relationships and trust." },
+      styles: { title: "Communication Styles", body: "Adapt to different cultures and contexts." },
+      customs: { title: "Customs & Traditions", body: "Holidays, values and social norms." },
+      insights: { title: "Country-Specific Insights", body: "Understand regional differences across Latin America." },
+    },
+
+    countries: {
+      eyebrow: "Country-specific modules",
+      title: "Understand the unique culture and way of doing business in each country",
+      mexico: "Mexico",
+      colombia: "Colombia",
+      argentina: "Argentina",
+      chile: "Chile",
+      peru: "Peru",
+      more: "And more",
+      moreDetail: "Central America, the Caribbean and beyond",
+    },
+
+    tracks: {
+      eyebrow: "Specialty tracks",
+      title: "Your goal shapes your curriculum",
+      body: "Tell us why you are learning Spanish and the academy maps you onto a specialised path alongside your general Spanish foundation.",
+      healthcare: {
+        title: "Spanish for Healthcare",
+        body: "Patient conversations, families, and cultural intelligence for Spanish-speaking communities.",
+      },
+      lawEnforcement: {
+        title: "Spanish for Law Enforcement",
+        body: "Field commands, legal rights, emergency response, victim interviews and community safety.",
+      },
+      business: {
+        title: "Spanish for Business",
+        body: "Negotiation, presentations, written correspondence and professional communication.",
+      },
+      remote: {
+        title: "Spanish for Remote Collaboration",
+        body: "Technical communication and working day to day with distributed teams.",
+      },
+    },
+
+    credentials: {
+      eyebrow: "Get certified. Open doors.",
+      title: "Credentials you earn by demonstrating competency",
+      body: "Credentials are not awarded for watching videos or completing lessons. Each one records the competencies you demonstrated, how you performed in assessments and simulations, and the Spanish level you reached.",
+      planned: "Planned credentials",
+      items: {
+        foundations: "Spanish Foundations",
+        general: "General Spanish A1–B2",
+        professional: "Professional Spanish",
+        healthcare: "Spanish for Healthcare",
+        lawEnforcement: "Spanish for Law Enforcement",
+        business: "Spanish for Business",
+        cultural: "Cultural Intelligence in Spanish-Speaking Communities",
+      },
+      records: "Each credential records",
+      recordItems: {
+        competencies: "Competencies achieved",
+        assessment: "Assessment performance",
+        simulation: "Simulation performance",
+        level: "Spanish level reached",
+        specialization: "Professional specialization, where applicable",
+      },
+    },
+
+    valueStrip: {
+      audience: "For professionals, students and travellers",
+      anywhere: "Learn anytime, anywhere",
+      levels: "All levels, A1 to C2",
+      impact: "Real skills. Real impact. Real opportunities.",
+    },
+
+    closing: {
+      title: "One language. Many connections. Limitless opportunities.",
+      body: "By the end, you should be able to answer three questions: where am I now, what should I learn next, and what can I now do in the real world?",
+    },
+
+    cta: {
+      title: "Find your Spanish level and start your path.",
+      subtitle:
+        "Begin with the assessment. It maps your competencies, your goals and the track that fits you.",
+      secondary: "Explore all academies",
     },
   },
 };

@@ -41,6 +41,10 @@
   --color-academy-remote: #1e40af;
   --color-academy-path: #db2777;
   --color-academy-continuing: #a16207;
+  /* Spanish Academy runs as its own premium path (/spanish), so it gets a
+     warm accent that reads apart from the teal marketing brand. */
+  --color-academy-spanish: #c2410c;
+  --color-academy-spanish-soft: #fff7ed;
 
   --color-accent: #10b981;
   --color-accent-light: #ecfdf5;
