@@ -4,7 +4,7 @@ import DarkSection from "./DarkSection";
 
 // Bottom-of-page CTA: headline + two buttons + an optional row of assurances.
 // Used on nearly every marketing page in the designs.
-export default function CtaBanner({ title, subtitle, primary, secondary, features = [], icon }) {
+export default function CtaBanner({ title, subtitle, primary, primarySlot, secondary, features = [], icon }) {
   return (
     <DarkSection className="rounded-2xl">
       <div className="flex flex-col gap-6 p-8 lg:flex-row lg:items-center lg:gap-10">
@@ -20,6 +20,7 @@ export default function CtaBanner({ title, subtitle, primary, secondary, feature
         </div>
 
         <div className="flex flex-wrap gap-3">
+          {primarySlot}
           {primary && (
             <Link
               href={primary.href}

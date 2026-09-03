@@ -14,6 +14,7 @@ import {
 import { FaGoogle, FaMicrosoft, FaApple } from "react-icons/fa6";
 import Button from "@/components/common/Button";
 import { useAuth } from "@/context/AuthContext";
+import { safeNextPath } from "@/lib/safeNextPath";
 
 const SOCIAL_PROVIDERS = [
   { icon: FaGoogle, label: "Continue with Google" },
@@ -90,8 +91,8 @@ export default function LoginForm() {
 
     try {
       const user = await login(form.email.trim(), form.password);
-      const next = searchParams.get("next");
-      router.push(next || LANDING_BY_ROLE[user.role] || "/student");
+      const next = safeNextPath(searchParams.get("next"), LANDING_BY_ROLE[user.role] || "/student");
+      router.push(next);
       router.refresh();
     } catch (error) {
       // Field-level messages from the API win; otherwise show the banner.

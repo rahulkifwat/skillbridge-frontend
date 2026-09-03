@@ -6,6 +6,7 @@ import Container from "@/components/common/Container";
 import CountryFlag from "@/components/common/CountryFlag";
 import CtaBanner from "@/components/marketing/CtaBanner";
 import DarkSection from "@/components/marketing/DarkSection";
+import StartSpanishAssessmentButton from "@/components/spanish/StartSpanishAssessmentButton";
 import { useT } from "@/context/LanguageContext";
 import {
   CONTEXTS,
@@ -65,13 +66,12 @@ export default function SpanishAcademyContent() {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/assessment"
-                className="inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90"
+              <StartSpanishAssessmentButton
+                className="inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90 disabled:opacity-60"
                 style={{ backgroundColor: ACCENT, boxShadow: "0 10px 30px -12px rgba(194,65,12,0.7)" }}
               >
-                {t("spanish.ctaPrimary")} <HiArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+                {t("spanish.ctaPrimary")}
+              </StartSpanishAssessmentButton>
               <a
                 href="#how-it-works"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
@@ -190,13 +190,12 @@ export default function SpanishAcademyContent() {
               {t("spanish.entry.title")}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-body">{t("spanish.entry.body")}</p>
-            <Link
-              href="/assessment"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            <StartSpanishAssessmentButton
+              className="mt-6 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60"
               style={{ backgroundColor: ACCENT }}
             >
-              {t("spanish.ctaPrimary")} <HiArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+              {t("spanish.ctaPrimary")}
+            </StartSpanishAssessmentButton>
           </div>
 
           <div className="rounded-2xl border border-border bg-white p-6 shadow-sm">
@@ -547,7 +546,11 @@ export default function SpanishAcademyContent() {
           <CtaBanner
             title={t("spanish.cta.title")}
             subtitle={t("spanish.cta.subtitle")}
-            primary={{ label: t("spanish.ctaPrimary"), href: "/assessment" }}
+            primarySlot={
+              <StartSpanishAssessmentButton className="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-hover disabled:opacity-60">
+                {t("spanish.ctaPrimary")}
+              </StartSpanishAssessmentButton>
+            }
             secondary={{ label: t("spanish.cta.secondary"), href: "/academies" }}
             icon={
               <span className="inline-flex h-16 w-16 items-center justify-center rounded-xl border border-white/15 bg-white/5">
