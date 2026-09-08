@@ -6,6 +6,8 @@ const es = {
 
   common: {
     logIn: "Iniciar sesión",
+    logOut: "Cerrar sesión",
+    myDashboard: "Mi panel",
     startAssessment: "Iniciar evaluación — $25",
     startAssessmentLong: "Inicia tu evaluación profesional — $25",
     exploreAcademies: "Explora nuestras academias",

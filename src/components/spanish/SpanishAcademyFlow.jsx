@@ -44,6 +44,18 @@ function storageKey(userId) {
   return `sb_spanish_assessment:${userId}`;
 }
 
+function readSavedProfile(userId) {
+  if (typeof window === "undefined" || !userId) return null;
+  try {
+    const raw = window.localStorage.getItem(storageKey(userId));
+    if (!raw) return null;
+    const saved = JSON.parse(raw);
+    return saved?.profile || null;
+  } catch {
+    return null;
+  }
+}
+
 function skillLabel(skill) {
   const labels = {
     vocabulary: "Vocabulary",
@@ -63,28 +75,13 @@ export default function SpanishAcademyFlow() {
   const { user } = useAuth();
   const firstName = user?.fullName?.split(" ")[0] || "there";
 
-  const [step, setStep] = useState("welcome");
+  const [profile, setProfile] = useState(() => readSavedProfile(user?.id));
+  const [step, setStep] = useState(() => (readSavedProfile(user?.id) ? "profile" : "welcome"));
   const [backgroundId, setBackgroundId] = useState("");
   const [goalId, setGoalId] = useState("");
   const [session, setSession] = useState(null);
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    if (!user?.id) return;
-    try {
-      const raw = window.localStorage.getItem(storageKey(user.id));
-      if (!raw) return;
-      const saved = JSON.parse(raw);
-      if (saved?.profile) {
-        setProfile(saved.profile);
-        setStep("profile");
-      }
-    } catch {
-      // Ignore a corrupt cache and start from the welcome screen.
-    }
-  }, [user?.id]);
 
   const progressLabel = useMemo(() => {
     if (!session) return "";

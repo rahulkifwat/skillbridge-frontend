@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { HiArrowRight, HiCheckCircle, HiChevronRight, HiSparkles } from "react-icons/hi2";
+import { HiCheckCircle, HiChevronRight, HiSparkles } from "react-icons/hi2";
 import Container from "@/components/common/Container";
 import CountryFlag from "@/components/common/CountryFlag";
 import CtaBanner from "@/components/marketing/CtaBanner";

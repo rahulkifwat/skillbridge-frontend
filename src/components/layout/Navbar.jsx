@@ -2,20 +2,62 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { HiBars3, HiXMark, HiChevronDown } from "react-icons/hi2";
 import BrandLogo from "@/components/common/BrandLogo";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
+import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/context/LanguageContext";
 import { navLinks } from "@/data/navigation";
+import { landingForRole } from "@/lib/roleLanding";
+import { SPANISH_ASSESSMENT_PATH } from "@/lib/spanishAcademyPaths";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const pathname = usePathname();
+  const router = useRouter();
   const t = useT();
+  const { user, loading, logout } = useAuth();
 
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const dashboardHref = landingForRole(user?.role);
+  const assessmentHref = user?.role === "student" ? SPANISH_ASSESSMENT_PATH : "/assessment";
+  const displayName = user?.fullName?.split(" ")[0] || "";
+
+  async function handleLogout() {
+    setMobileOpen(false);
+    await logout();
+    router.push("/");
+    router.refresh();
+  }
+
+  const accountActions = loading ? (
+    <span className="h-9 w-24 rounded-lg border border-white/10 bg-white/5" aria-hidden="true" />
+  ) : user ? (
+    <>
+      <Link
+        href={dashboardHref}
+        className="rounded-lg border border-white/25 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+      >
+        {displayName}
+      </Link>
+      <button
+        type="button"
+        onClick={handleLogout}
+        className="rounded-lg px-3 py-2 text-sm font-medium text-white/80 hover:text-white"
+      >
+        {t("common.logOut")}
+      </button>
+    </>
+  ) : (
+    <Link
+      href="/login"
+      className="rounded-lg border border-white/25 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
+    >
+      {t("common.logIn")}
+    </Link>
+  );
 
   return (
     <header className="sticky top-0 z-50 bg-ink">
@@ -74,14 +116,9 @@ export default function Navbar() {
 
         <div className="ml-auto hidden items-center gap-3 xl:flex">
           <LanguageSwitcher />
+          {accountActions}
           <Link
-            href="/login"
-            className="rounded-lg border border-white/25 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
-          >
-            {t("common.logIn")}
-          </Link>
-          <Link
-            href="/assessment"
+            href={assessmentHref}
             className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-hover"
           >
             {t("common.startAssessment")}
@@ -116,15 +153,34 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="mt-3 flex flex-col gap-2 border-t border-ink-line pt-3">
+              {user ? (
+                <>
+                  <Link
+                    href={dashboardHref}
+                    className="rounded-lg border border-white/25 px-4 py-2 text-center text-sm font-medium text-white"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {displayName} · {t("common.myDashboard")}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="rounded-lg px-4 py-2 text-center text-sm font-medium text-white/80"
+                  >
+                    {t("common.logOut")}
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="rounded-lg border border-white/25 px-4 py-2 text-center text-sm font-medium text-white"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("common.logIn")}
+                </Link>
+              )}
               <Link
-                href="/login"
-                className="rounded-lg border border-white/25 px-4 py-2 text-center text-sm font-medium text-white"
-                onClick={() => setMobileOpen(false)}
-              >
-                {t("common.logIn")}
-              </Link>
-              <Link
-                href="/assessment"
+                href={assessmentHref}
                 className="rounded-lg bg-brand px-4 py-2 text-center text-sm font-semibold text-white"
                 onClick={() => setMobileOpen(false)}
               >

@@ -86,3 +86,24 @@ export const contactApi = {
 export const dashboardApi = {
   overview: () => apiRequest("/dashboard/overview"),
 };
+
+export const spanishApi = {
+  billing: () => apiRequest("/spanish/billing"),
+  checkout: (product) => apiRequest("/spanish/billing/checkout", { method: "POST", body: { product } }),
+  confirmCheckout: (sessionId) =>
+    apiRequest(`/spanish/billing/confirm?sessionId=${encodeURIComponent(sessionId)}`),
+  start: (payload) => apiRequest("/spanish/assessment/start", { method: "POST", body: payload }),
+  section: (attemptId, skill) => apiRequest(`/spanish/assessment/${attemptId}/section/${skill}`),
+  saveAnswers: (attemptId, answers, artifacts) =>
+    apiRequest(`/spanish/assessment/${attemptId}/answers`, { method: "POST", body: { answers, artifacts } }),
+  review: (attemptId) => apiRequest(`/spanish/assessment/${attemptId}/review`),
+  submit: (attemptId) => apiRequest(`/spanish/assessment/${attemptId}/submit`, { method: "POST" }),
+  profile: () => apiRequest("/spanish/profile"),
+  learning: () => apiRequest("/spanish/learning"),
+  credentials: () => apiRequest("/spanish/credentials"),
+  simulations: () => apiRequest("/spanish/simulations"),
+  startSimulation: (scenarioId) =>
+    apiRequest("/spanish/simulations/start", { method: "POST", body: { scenarioId } }),
+  chooseSimulation: (runId, optionId) =>
+    apiRequest(`/spanish/simulations/${runId}/choose`, { method: "POST", body: { optionId } }),
+};
