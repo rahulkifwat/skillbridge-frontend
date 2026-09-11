@@ -42,7 +42,11 @@ const FEATURES = [
   },
 ];
 
-export default function LoginPage() {
+export default async function LoginPage({ searchParams }) {
+  const params = await searchParams;
+  const next = typeof params.next === "string" ? params.next : "";
+  const signupHref = next ? `/signup?next=${encodeURIComponent(next)}` : "/signup";
+
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       {/* Left: navy brand panel */}
@@ -106,7 +110,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-end gap-4">
           <span className="text-sm text-body">New to SkillBridge?</span>
           <Button
-            href="/signup"
+            href={signupHref}
             variant="brand-light"
             className="border-brand/40 px-4 py-2"
           >

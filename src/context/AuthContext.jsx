@@ -61,6 +61,16 @@ export function AuthProvider({ children }) {
     };
   }, [persist]);
 
+  const register = useCallback(
+    async ({ fullName, email, password, role }) => {
+      const result = await authApi.register({ fullName, email, password, role });
+      setToken(result.data.token);
+      persist(result.data.user);
+      return result.data.user;
+    },
+    [persist]
+  );
+
   const login = useCallback(
     async (email, password) => {
       const result = await authApi.login(email, password);
@@ -82,8 +92,8 @@ export function AuthProvider({ children }) {
   }, [persist]);
 
   const value = useMemo(
-    () => ({ user, loading, login, logout, isAuthenticated: Boolean(user) }),
-    [user, loading, login, logout]
+    () => ({ user, loading, login, register, logout, isAuthenticated: Boolean(user) }),
+    [user, loading, login, register, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
