@@ -142,7 +142,11 @@ export default function SpanishDashboard() {
                     {option.label}
                   </button>
                 ))}
-                {simulation.complete ? <p className="mt-3 font-semibold text-accent">Simulation complete.</p> : null}
+                {simulation.complete ? (
+                  <p className="mt-3 font-semibold text-accent">
+                    {simulation.coachMessage || "Simulation complete. This was practice, not a pass/fail grade."}
+                  </p>
+                ) : null}
               </div>
             ) : null}
           </div>

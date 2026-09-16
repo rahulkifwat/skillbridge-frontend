@@ -45,7 +45,11 @@ const FEATURES = [
 export default async function LoginPage({ searchParams }) {
   const params = await searchParams;
   const next = typeof params.next === "string" ? params.next : "";
-  const signupHref = next ? `/signup?next=${encodeURIComponent(next)}` : "/signup";
+  const academy = params.academy === "spanish" ? "spanish" : "";
+  const signupQuery = new URLSearchParams();
+  if (next) signupQuery.set("next", next);
+  if (academy) signupQuery.set("academy", academy);
+  const signupHref = signupQuery.toString() ? `/signup?${signupQuery}` : "/signup";
 
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">

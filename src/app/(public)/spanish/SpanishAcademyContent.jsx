@@ -550,7 +550,7 @@ export default function SpanishAcademyContent() {
                 {t("spanish.ctaPrimary")}
               </StartSpanishAssessmentButton>
             }
-            secondary={{ label: t("spanish.cta.secondary"), href: "/academies" }}
+            secondary={{ label: t("spanish.ctaSecondary"), href: "#how-it-works" }}
             icon={
               <span className="inline-flex h-16 w-16 items-center justify-center rounded-xl border border-white/15 bg-white/5">
                 <HiChevronRight className="h-8 w-8" aria-hidden="true" />

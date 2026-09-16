@@ -60,6 +60,8 @@ export default function SpanishDiagnosticFlow() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [stripeSession, setStripeSession] = useState(null);
+  const [sectionFeedback, setSectionFeedback] = useState([]);
+  const [allFeedback, setAllFeedback] = useState([]);
 
   const handleStripeError = useCallback((message) => {
     setError(message);
@@ -143,6 +145,7 @@ export default function SpanishDiagnosticFlow() {
     setItems(result.data.items);
     setAnswers(result.data.answers || {});
     setArtifacts(result.data.artifacts || {});
+    setSectionFeedback([]);
   }
 
   function setAnswer(itemId, value) {
@@ -153,7 +156,10 @@ export default function SpanishDiagnosticFlow() {
     setBusy(true);
     setError("");
     try {
-      await spanishApi.saveAnswers(attemptId, answers, artifacts);
+      const saved = await spanishApi.saveAnswers(attemptId, answers, artifacts);
+      const notes = Object.values(saved.data.feedback || {});
+      setSectionFeedback(notes);
+      setAllFeedback((current) => current.concat(notes));
       if (skillIndex < SKILLS.length - 1) {
         const next = skillIndex + 1;
         setSkillIndex(next);
@@ -418,6 +424,13 @@ export default function SpanishDiagnosticFlow() {
               </li>
             ))}
           </ol>
+          {sectionFeedback.length ? (
+            <ul className="mt-4 space-y-2 rounded-xl border border-emerald-100 bg-emerald-50 p-4 text-sm text-heading">
+              {sectionFeedback.map((row, index) => (
+                <li key={`${row.message}-${index}`}>{row.message}</li>
+              ))}
+            </ul>
+          ) : null}
           <button
             type="button"
             disabled={busy}
@@ -434,6 +447,13 @@ export default function SpanishDiagnosticFlow() {
         <section className="mt-3">
           <h1 className="text-3xl font-bold text-heading">Review & submit</h1>
           <p className="mt-3 text-sm text-body">Check that each Spanish skill section has a response before scoring.</p>
+          {allFeedback.length ? (
+            <ul className="mt-4 space-y-2 rounded-xl border border-emerald-100 bg-emerald-50 p-4 text-sm text-heading">
+              {allFeedback.slice(-6).map((row, index) => (
+                <li key={`${row.message}-${index}`}>{row.message}</li>
+              ))}
+            </ul>
+          ) : null}
           <ul className="mt-6 space-y-3">
             {review.map((row) => (
               <li key={row.skill} className="flex items-center justify-between rounded-xl border border-border bg-white px-4 py-3 text-sm">

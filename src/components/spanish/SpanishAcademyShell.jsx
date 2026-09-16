@@ -16,7 +16,7 @@ export default function SpanishAcademyShell({ children, eyebrow = "Spanish Acade
             <p className="text-sm font-bold">SkillBridge Spanish Academy</p>
           </div>
           <nav className="flex items-center gap-3 text-sm">
-            <Link href="/spanish" className="text-white/70 hover:text-white">
+            <Link href="/spanish-academy" className="text-white/70 hover:text-white">
               Academy home
             </Link>
             <Link href={SPANISH_DASHBOARD_PATH} className="text-white/70 hover:text-white">

@@ -11,17 +11,11 @@ import {
   HiUser,
   HiBriefcase,
 } from "react-icons/hi2";
-import { FaGoogle, FaMicrosoft, FaApple } from "react-icons/fa6";
 import Button from "@/components/common/Button";
+import SocialOAuthButtons from "@/components/auth/SocialOAuthButtons";
 import { useAuth } from "@/context/AuthContext";
-import { landingForRole } from "@/lib/roleLanding";
+import { landingForAuthenticatedUser } from "@/lib/roleLanding";
 import { safeNextPath } from "@/lib/safeNextPath";
-
-const SOCIAL_PROVIDERS = [
-  { icon: FaGoogle, label: "Continue with Google" },
-  { icon: FaMicrosoft, label: "Continue with Microsoft" },
-  { icon: FaApple, label: "Continue with Apple" },
-];
 
 const ACCOUNT_TYPES = [
   { id: "student", label: "Student" },
@@ -101,13 +95,15 @@ export default function SignupForm() {
     setFormError("");
 
     try {
+      const academy = searchParams.get("academy") === "spanish" ? "spanish" : undefined;
       const user = await register({
         fullName: form.fullName.trim(),
         email: form.email.trim(),
         password: form.password,
         role: form.role,
+        academy,
       });
-      const next = safeNextPath(searchParams.get("next"), landingForRole(user.role));
+      const next = safeNextPath(searchParams.get("next"), landingForAuthenticatedUser(user));
       router.push(next);
       router.refresh();
     } catch (error) {
@@ -284,20 +280,7 @@ export default function SignupForm() {
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      <div className="flex flex-col gap-3">
-        {SOCIAL_PROVIDERS.map(({ icon: Icon, label }) => (
-          <button
-            key={label}
-            type="button"
-            disabled
-            title="Social sign-in is not configured yet."
-            className="inline-flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-white px-5 py-3 text-sm font-semibold text-heading transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            <Icon aria-hidden="true" className="h-4 w-4" />
-            {label}
-          </button>
-        ))}
-      </div>
+      <SocialOAuthButtons />
     </div>
   );
 }

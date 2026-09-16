@@ -28,6 +28,8 @@ const en = {
     allAcademies: "All Academies",
     careerPaths: "Career Paths",
     careerAssessment: "Career Assessment",
+    spanishDiagnostic: "Spanish Diagnostic",
+    spanishDashboard: "Dashboard",
     about: "About Us",
     roadmap: "Roadmap",
     resources: "Resources",

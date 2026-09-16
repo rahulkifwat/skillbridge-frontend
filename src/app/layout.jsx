@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { AuthProvider } from "@/context/AuthContext";
+import SpanishSplitGuard from "@/components/spanish/SpanishSplitGuard";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { DEFAULT_LOCALE, LOCALE_COOKIE, getLocaleMeta, normalizeLocale } from "@/i18n/config";
 import "./globals.css";
@@ -23,7 +24,9 @@ export default async function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider initialLocale={locale}>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <SpanishSplitGuard>{children}</SpanishSplitGuard>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -28,6 +28,8 @@ const es = {
     allAcademies: "Todas las academias",
     careerPaths: "Rutas profesionales",
     careerAssessment: "Evaluación profesional",
+    spanishDiagnostic: "Diagnóstico de español",
+    spanishDashboard: "Panel",
     about: "Sobre nosotros",
     roadmap: "Hoja de ruta",
     resources: "Recursos",

@@ -1,3 +1,5 @@
+import { landingForUser } from "@/lib/spanishSplit";
+
 export const LANDING_BY_ROLE = {
   student: "/student",
   instructor: "/instructor",
@@ -9,4 +11,8 @@ export const LANDING_BY_ROLE = {
 
 export function landingForRole(role) {
   return LANDING_BY_ROLE[role] || "/student";
+}
+
+export function landingForAuthenticatedUser(user) {
+  return landingForUser(user);
 }

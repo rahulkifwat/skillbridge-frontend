@@ -8,8 +8,13 @@ import BrandLogo from "@/components/common/BrandLogo";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
 import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/context/LanguageContext";
+import { landingForAuthenticatedUser, landingForRole } from "@/lib/roleLanding";
 import { navLinks } from "@/data/navigation";
-import { landingForRole } from "@/lib/roleLanding";
+import {
+  isSpanishAcademyUser,
+  SPANISH_ACADEMY_HOME,
+  spanishNavLinks,
+} from "@/lib/spanishSplit";
 import { SPANISH_ASSESSMENT_PATH } from "@/lib/spanishAcademyPaths";
 
 export default function Navbar() {
@@ -19,16 +24,21 @@ export default function Navbar() {
   const router = useRouter();
   const t = useT();
   const { user, loading, logout } = useAuth();
+  const spanishSurface =
+    isSpanishAcademyUser(user) || pathname.startsWith("/spanish") || pathname.startsWith("/spanish-academy");
+  const links = spanishSurface ? spanishNavLinks : navLinks;
 
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
-  const dashboardHref = landingForRole(user?.role);
-  const assessmentHref = user?.role === "student" ? SPANISH_ASSESSMENT_PATH : "/assessment";
+  const dashboardHref = landingForAuthenticatedUser(user) || landingForRole(user?.role);
+  const homeHref = spanishSurface ? SPANISH_ACADEMY_HOME : "/";
+  const assessmentHref = spanishSurface || user?.role === "student" ? SPANISH_ASSESSMENT_PATH : "/assessment";
+  const loginHref = spanishSurface ? `/login?academy=spanish&next=${encodeURIComponent(SPANISH_ACADEMY_HOME)}` : "/login";
   const displayName = user?.fullName?.split(" ")[0] || "";
 
   async function handleLogout() {
     setMobileOpen(false);
     await logout();
-    router.push("/");
+    router.push(spanishSurface ? SPANISH_ACADEMY_HOME : "/");
     router.refresh();
   }
 
@@ -52,7 +62,7 @@ export default function Navbar() {
     </>
   ) : (
     <Link
-      href="/login"
+      href={loginHref}
       className="rounded-lg border border-white/25 px-4 py-2 text-sm font-medium text-white hover:bg-white/10"
     >
       {t("common.logIn")}
@@ -62,10 +72,10 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-ink">
       <div className="mx-auto flex h-16 w-full max-w-[1600px] items-center gap-6 px-4 sm:px-6 lg:px-8">
-        <BrandLogo inverted />
+        <BrandLogo inverted href={homeHref} />
 
         <nav className="hidden flex-1 items-center gap-4 xl:flex 2xl:gap-5">
-          {navLinks.map((link) =>
+          {links.map((link) =>
             link.children ? (
               <div
                 key={link.tKey}
@@ -142,7 +152,7 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="border-t border-ink-line bg-ink xl:hidden">
           <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-1 px-4 py-4 sm:px-6">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.tKey}
                 href={link.href}
@@ -172,7 +182,7 @@ export default function Navbar() {
                 </>
               ) : (
                 <Link
-                  href="/login"
+                  href={loginHref}
                   className="rounded-lg border border-white/25 px-4 py-2 text-center text-sm font-medium text-white"
                   onClick={() => setMobileOpen(false)}
                 >

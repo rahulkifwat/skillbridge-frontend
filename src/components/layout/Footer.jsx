@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FaLinkedinIn, FaFacebookF, FaXTwitter, FaInstagram, FaYoutube } from "react-icons/fa6";
 import BrandLogo from "@/components/common/BrandLogo";
+import { useAuth } from "@/context/AuthContext";
 import { useT } from "@/context/LanguageContext";
 import { footerLinks, socialLinks } from "@/data/navigation";
+import { isSpanishAcademyUser, SPANISH_ACADEMY_HOME, spanishFooterLinks } from "@/lib/spanishSplit";
 
 const SOCIAL_ICONS = {
   linkedin: FaLinkedinIn,
@@ -16,15 +19,21 @@ const SOCIAL_ICONS = {
 
 export default function Footer() {
   const t = useT();
+  const pathname = usePathname();
+  const { user } = useAuth();
+  const spanishSurface =
+    isSpanishAcademyUser(user) || pathname.startsWith("/spanish") || pathname.startsWith("/spanish-academy");
+  const groups = spanishSurface ? spanishFooterLinks : footerLinks;
+  const logoHref = spanishSurface ? SPANISH_ACADEMY_HOME : "/";
 
   return (
     <footer className="bg-ink text-white/70">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-8 px-4 py-12 sm:grid-cols-3 sm:px-6 lg:grid-cols-7 lg:px-8">
         <div className="col-span-2 sm:col-span-3 lg:col-span-2">
-          <BrandLogo inverted showTagline />
+          <BrandLogo inverted showTagline href={logoHref} />
         </div>
 
-        {footerLinks.map((group) => (
+        {groups.map((group) => (
           <div key={group.tKey}>
             <h3 className="mb-3 text-sm font-semibold text-white">{t(group.tKey)}</h3>
             <ul className="flex flex-col gap-2">

@@ -34,18 +34,12 @@ export function AuthProvider({ children }) {
     let cancelled = false;
 
     async function restore() {
-      if (!getToken()) {
-        if (!cancelled) setLoading(false);
-        return;
-      }
-
       setUser(readCachedUser());
 
       try {
         const result = await authApi.me();
         if (!cancelled) persist(result.data.user);
       } catch {
-        // Token expired or revoked — drop the stale session.
         if (!cancelled) {
           clearToken();
           persist(null);
@@ -62,8 +56,8 @@ export function AuthProvider({ children }) {
   }, [persist]);
 
   const register = useCallback(
-    async ({ fullName, email, password, role }) => {
-      const result = await authApi.register({ fullName, email, password, role });
+    async ({ fullName, email, password, role, academy }) => {
+      const result = await authApi.register({ fullName, email, password, role, academy });
       setToken(result.data.token);
       persist(result.data.user);
       return result.data.user;
@@ -72,8 +66,8 @@ export function AuthProvider({ children }) {
   );
 
   const login = useCallback(
-    async (email, password) => {
-      const result = await authApi.login(email, password);
+    async (email, password, academy) => {
+      const result = await authApi.login(email, password, academy);
       setToken(result.data.token);
       persist(result.data.user);
       return result.data.user;

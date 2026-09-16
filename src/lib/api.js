@@ -69,12 +69,21 @@ export async function apiRequest(path, { method = "GET", body, auth = true } = {
 }
 
 export const authApi = {
-  login: (email, password) =>
-    apiRequest("/auth/login", { method: "POST", body: { email, password }, auth: false }),
+  login: (email, password, academy) =>
+    apiRequest("/auth/login", {
+      method: "POST",
+      body: { email, password, ...(academy ? { academy } : {}) },
+      auth: false,
+    }),
   register: (payload) =>
     apiRequest("/auth/register", { method: "POST", body: payload, auth: false }),
   me: () => apiRequest("/auth/me"),
   logout: () => apiRequest("/auth/logout", { method: "POST" }),
+  oauthProviders: () => apiRequest("/auth/oauth/providers", { auth: false }),
+  oauthStartUrl: (provider, query = "") => {
+    const base = `${API_URL}/auth/oauth/${encodeURIComponent(provider)}`;
+    return query ? `${base}?${query}` : base;
+  },
 };
 
 export const contactApi = {
