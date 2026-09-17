@@ -75,6 +75,8 @@ export const spanishNavLinks = [
   { tKey: "nav.spanishAcademy", label: "Spanish Academy", href: SPANISH_ACADEMY_HOME },
   { tKey: "nav.spanishDiagnostic", label: "Spanish Diagnostic", href: "/spanish/assessment" },
   { tKey: "nav.spanishDashboard", label: "Dashboard", href: "/spanish/dashboard" },
+  { tKey: "nav.spanishPrograms", label: "Programs", href: "/spanish/programs" },
+  { tKey: "nav.spanishSimulations", label: "Simulations", href: "/spanish/simulations" },
   { tKey: "nav.about", label: "About Us", href: "/about" },
   { tKey: "nav.contact", label: "Contact", href: "/contact" },
 ];
@@ -87,6 +89,8 @@ export const spanishFooterLinks = [
       { tKey: "nav.spanishAcademy", label: "Spanish Academy", href: SPANISH_ACADEMY_HOME },
       { tKey: "nav.spanishDiagnostic", label: "Spanish Diagnostic", href: "/spanish/assessment" },
       { tKey: "nav.spanishDashboard", label: "Dashboard", href: "/spanish/dashboard" },
+      { tKey: "nav.spanishPrograms", label: "Programs", href: "/spanish/programs" },
+      { tKey: "nav.spanishSimulations", label: "Simulations", href: "/spanish/simulations" },
     ],
   },
   {

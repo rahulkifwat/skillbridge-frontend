@@ -30,6 +30,8 @@ const es = {
     careerAssessment: "Evaluación profesional",
     spanishDiagnostic: "Diagnóstico de español",
     spanishDashboard: "Panel",
+    spanishPrograms: "Programas",
+    spanishSimulations: "Simulaciones",
     about: "Sobre nosotros",
     roadmap: "Hoja de ruta",
     resources: "Recursos",
