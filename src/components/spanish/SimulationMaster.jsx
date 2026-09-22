@@ -92,10 +92,16 @@ export default function SimulationMaster() {
         <h2 className="mt-1 text-2xl font-bold text-heading">Practice the job in Spanish</h2>
         <p className="mt-2 text-sm text-body">
           One reusable engine. Scenario data drives Medical, Customer Service, Law Enforcement, and Construction
-          simulations — not hard-coded quizzes.
+          simulations — not hard-coded quizzes. Start stays locked until the matching Video Master lesson is 100% complete.
         </p>
       </div>
       {error ? <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-heading">{error}</p> : null}
+      <p className="text-sm">
+        <a href="/spanish/videos" className="font-semibold text-primary">
+          Open Video Master
+        </a>{" "}
+        if Start is still disabled.
+      </p>
       <ul className="grid gap-3 sm:grid-cols-2">
         {items.map((row) => (
           <li key={row.simulation_id} className="rounded-2xl border border-border bg-white p-4">
@@ -108,11 +114,11 @@ export default function SimulationMaster() {
             </p>
             <button
               type="button"
-              disabled={busy}
+              disabled={busy || !row.unlocked}
               onClick={() => start(row.simulation_id)}
-              className="mt-3 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white disabled:opacity-50"
+              className="mt-3 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Start
+              {row.unlocked ? "Start" : "Locked until video complete"}
             </button>
           </li>
         ))}

@@ -19,6 +19,15 @@ export default function SpanishAcademyShell({ children, eyebrow = "Spanish Acade
             <Link href="/spanish-academy" className="text-white/70 hover:text-white">
               Academy home
             </Link>
+            <Link href="/spanish/programs" className="text-white/70 hover:text-white">
+              Programs
+            </Link>
+            <Link href="/spanish/videos" className="text-white/70 hover:text-white">
+              Videos
+            </Link>
+            <Link href="/spanish/simulations" className="text-white/70 hover:text-white">
+              Simulations
+            </Link>
             <Link href={SPANISH_DASHBOARD_PATH} className="text-white/70 hover:text-white">
               Dashboard
             </Link>

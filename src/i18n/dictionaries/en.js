@@ -31,6 +31,7 @@ const en = {
     spanishDiagnostic: "Spanish Diagnostic",
     spanishDashboard: "Dashboard",
     spanishPrograms: "Programs",
+    spanishVideos: "Videos",
     spanishSimulations: "Simulations",
     about: "About Us",
     roadmap: "Roadmap",

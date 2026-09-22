@@ -12,6 +12,7 @@ import {
   HiShieldCheck,
   HiUserGroup,
 } from "react-icons/hi2";
+import TeacherSimulationDesk from "@/components/spanish/TeacherSimulationDesk";
 import { dashboardApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import PortalSidebar from "./PortalSidebar";
@@ -119,6 +120,8 @@ export default function RoleDashboard({ role }) {
                 return <article key={label} className="rounded-2xl border border-border bg-white p-5 shadow-sm"><MetricIcon className="mb-4 h-6 w-6 text-primary" /><p className="text-3xl font-bold text-heading">{value}</p><p className="mt-1 text-sm text-muted">{label}</p></article>;
               })}
             </section>
+
+            {role === "instructor" || role === "administrator" ? <TeacherSimulationDesk /> : null}
 
             <section className="mt-7 grid gap-6 lg:grid-cols-3">
               <article className="rounded-2xl border border-border bg-white p-6 shadow-sm lg:col-span-2"><h2 className="text-lg font-bold text-heading">Priority actions</h2><p className="mt-1 text-sm text-muted">Start with the work that matters most today.</p><div className="mt-5 grid gap-3 sm:grid-cols-3">{config.actions.map((action) => <button key={action} className="rounded-xl border border-border p-4 text-left text-sm font-semibold text-heading transition hover:border-primary hover:bg-primary-light">{action}</button>)}</div></article>

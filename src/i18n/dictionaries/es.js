@@ -31,6 +31,7 @@ const es = {
     spanishDiagnostic: "Diagnóstico de español",
     spanishDashboard: "Panel",
     spanishPrograms: "Programas",
+    spanishVideos: "Videos",
     spanishSimulations: "Simulaciones",
     about: "Sobre nosotros",
     roadmap: "Hoja de ruta",

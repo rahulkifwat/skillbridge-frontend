@@ -111,6 +111,9 @@ export const spanishApi = {
   learning: () => apiRequest("/spanish/learning"),
   credentials: () => apiRequest("/spanish/credentials"),
   programs: () => apiRequest("/v1/spanish/programs"),
+  videos: () => apiRequest("/spanish/videos"),
+  videoProgress: (videoId, payload) =>
+    apiRequest(`/spanish/videos/${encodeURIComponent(videoId)}/progress`, { method: "POST", body: payload }),
   masterSimulations: (query = "") => apiRequest(`/v1/simulations${query}`),
   startMasterSimulation: (simulationId) =>
     apiRequest(`/v1/simulations/${encodeURIComponent(simulationId)}/start`, { method: "POST", body: {} }),
@@ -124,6 +127,11 @@ export const spanishApi = {
   retryMasterSimulation: (sessionId) =>
     apiRequest(`/v1/simulation-sessions/${encodeURIComponent(sessionId)}/retry`, { method: "POST", body: {} }),
   masterSimulationHistory: () => apiRequest("/v1/simulation-history"),
+  teacherStudents: () => apiRequest("/v1/teacher/students"),
+  teacherStudentResults: (id) => apiRequest(`/v1/teacher/students/${encodeURIComponent(id)}/simulation-results`),
+  teacherAnalytics: () => apiRequest("/v1/teacher/analytics"),
+  assignSimulation: (payload) =>
+    apiRequest("/v1/teacher/assignments", { method: "POST", body: payload }),
   simulations: () => apiRequest("/spanish/simulations"),
   startSimulation: (scenarioId) =>
     apiRequest("/spanish/simulations/start", { method: "POST", body: { scenarioId } }),

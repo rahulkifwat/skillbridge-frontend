@@ -41,8 +41,8 @@ export default function SpanishProgramsView() {
           </ul>
         </section>
       ))}
-      <Link href="/spanish/simulations" className="mt-8 inline-block text-sm font-semibold text-primary">
-        Open Simulation Master
+      <Link href="/spanish/videos" className="mt-8 inline-block text-sm font-semibold text-primary">
+        Continue to Videos
       </Link>
     </SpanishAcademyShell>
   );
