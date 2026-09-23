@@ -117,10 +117,15 @@ export const spanishApi = {
   masterSimulations: (query = "") => apiRequest(`/v1/simulations${query}`),
   startMasterSimulation: (simulationId) =>
     apiRequest(`/v1/simulations/${encodeURIComponent(simulationId)}/start`, { method: "POST", body: {} }),
-  respondMasterSimulation: (sessionId, content) =>
+  generateLayout: (simulationId, previousVariationId) =>
+    apiRequest("/v1/ai/layout", {
+      method: "POST",
+      body: { simulationId, previousVariationId },
+    }),
+  respondMasterSimulation: (sessionId, content, extra = {}) =>
     apiRequest(`/v1/simulation-sessions/${encodeURIComponent(sessionId)}/responses`, {
       method: "POST",
-      body: { response_type: "text", content },
+      body: { response_type: extra.response_type || "text", content },
     }),
   completeMasterSimulation: (sessionId) =>
     apiRequest(`/v1/simulation-sessions/${encodeURIComponent(sessionId)}/complete`, { method: "POST", body: {} }),

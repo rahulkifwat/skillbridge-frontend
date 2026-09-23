@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { spanishApi } from "@/lib/api";
+import AmbientBed from "@/components/spanish/AmbientBed";
 
 const CATEGORY_LABEL = {
   comprehension: "Comprehension",
@@ -14,6 +15,33 @@ const CATEGORY_LABEL = {
   task_completion: "Task completion",
 };
 
+const BAND_CLASS = {
+  green: "border-emerald-700 bg-emerald-600 text-white",
+  yellow: "border-amber-500 bg-amber-400 text-black",
+  red: "border-red-800 bg-red-600 text-white",
+};
+
+function FluencyBlock({ pronunciation, onRerun }) {
+  if (!pronunciation) return null;
+  return (
+    <div className={`mt-3 rounded-xl border-2 px-4 py-3 text-sm ${BAND_CLASS[pronunciation.band] || BAND_CLASS.yellow}`}>
+      <p className="font-semibold uppercase tracking-wide">
+        {pronunciation.band === "green"
+          ? "Fluent command"
+          : pronunciation.band === "yellow"
+            ? "Clear comprehension"
+            : "Rerun required"}
+      </p>
+      <p className="mt-1">{pronunciation.fluency}</p>
+      {pronunciation.rerun ? (
+        <button type="button" onClick={onRerun} className="mt-3 rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-red-700">
+          Rerun this container
+        </button>
+      ) : null}
+    </div>
+  );
+}
+
 export default function SimulationMaster() {
   const [items, setItems] = useState([]);
   const [session, setSession] = useState(null);
@@ -21,6 +49,9 @@ export default function SimulationMaster() {
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [programId, setProgramId] = useState("");
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     Promise.all([spanishApi.masterSimulations(), spanishApi.masterSimulationHistory()])
@@ -36,9 +67,13 @@ export default function SimulationMaster() {
     setError("");
     try {
       const result = await spanishApi.startMasterSimulation(id);
+      const row = items.find((item) => item.simulation_id === id);
+      setProgramId(row?.program_id || "");
       setSession({
         ...result.data,
         transcript: [{ role: "assistant", content: result.data.initial_message }],
+        atmosphere: result.data.atmosphere || row?.atmosphere,
+        master_script: result.data.master_script || row?.master_script || [],
       });
     } catch (err) {
       setError(err.message || "Could not start this simulation.");
@@ -47,18 +82,22 @@ export default function SimulationMaster() {
     }
   }
 
-  async function send() {
-    if (!session || !draft.trim()) return;
+  async function send(text, responseType = "text") {
+    const content = (text ?? draft).trim();
+    if (!session || !content) return;
     setBusy(true);
     setError("");
     try {
-      const result = await spanishApi.respondMasterSimulation(session.session_id, draft.trim());
+      const result = await spanishApi.respondMasterSimulation(session.session_id, content, {
+        response_type: responseType,
+      });
       setDraft("");
       setSession((current) => ({
+        ...current,
         ...result.data,
         transcript: [
           ...(current?.transcript || []),
-          { role: "student", content: draft.trim() },
+          { role: "student", content },
           { role: "assistant", content: result.data.assistant_message },
         ],
       }));
@@ -69,6 +108,27 @@ export default function SimulationMaster() {
     }
   }
 
+  function listen() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError("This browser does not expose the Web Speech API. Type your Spanish turn instead.");
+      return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "es-MX";
+    recognition.interimResults = false;
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || "";
+      setDraft(transcript);
+      send(transcript, "speech");
+    };
+    recognition.onerror = () => setListening(false);
+    recognition.onend = () => setListening(false);
+    recognitionRef.current = recognition;
+    setListening(true);
+    recognition.start();
+  }
+
   async function retry() {
     if (!session) return;
     setBusy(true);
@@ -77,6 +137,8 @@ export default function SimulationMaster() {
       setSession({
         ...result.data,
         transcript: [{ role: "assistant", content: result.data.initial_message }],
+        atmosphere: result.data.atmosphere || session.atmosphere,
+        master_script: result.data.master_script || session.master_script || [],
       });
     } catch (err) {
       setError(err.message || "Could not start a new variation.");
@@ -88,11 +150,12 @@ export default function SimulationMaster() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Simulation Master</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">Simulation Master · 85% practice</p>
         <h2 className="mt-1 text-2xl font-bold text-heading">Practice the job in Spanish</h2>
         <p className="mt-2 text-sm text-body">
-          One reusable engine. Scenario data drives Medical, Customer Service, Law Enforcement, and Construction
-          simulations — not hard-coded quizzes. Start stays locked until the matching Video Master lesson is 100% complete.
+          Ambient beds mix under the live deck. Speak with the browser microphone; green is fluent command, yellow is
+          clear comprehension, red prompts a container rerun. Patient and field conditions regenerate from the curriculum
+          engine — or OpenAI/Claude when those keys are funded.
         </p>
       </div>
       {error ? <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-heading">{error}</p> : null}
@@ -111,6 +174,7 @@ export default function SimulationMaster() {
             <p className="mt-2 text-xs text-muted">
               You: {row.student_role} · AI: {row.ai_role}
               {row.mastery_status ? ` · ${row.mastery_status}` : ""}
+              {row.atmosphere ? ` · ${row.atmosphere.label}` : ""}
             </p>
             <button
               type="button"
@@ -127,6 +191,10 @@ export default function SimulationMaster() {
       {session ? (
         <div className="rounded-2xl border border-border bg-white p-5">
           <p className="font-semibold text-heading">Live session</p>
+          {session.variation?.fieldCondition ? (
+            <p className="mt-1 text-sm text-body">Field condition: {session.variation.fieldCondition}</p>
+          ) : null}
+          <AmbientBed programId={programId} active={session.status !== "complete"} />
           <ul className="mt-3 max-h-72 space-y-2 overflow-auto text-sm">
             {(session.transcript || []).map((turn, index) => (
               <li
@@ -138,21 +206,30 @@ export default function SimulationMaster() {
               </li>
             ))}
           </ul>
+          <FluencyBlock pronunciation={session.pronunciation} onRerun={retry} />
           {session.status !== "complete" ? (
             <div className="mt-4 flex flex-col gap-2 sm:flex-row">
               <input
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
-                placeholder="Escribe en español…"
+                placeholder="Escribe o dicta en español…"
                 className="flex-1 rounded-lg border border-border px-3 py-2 text-sm"
               />
               <button
                 type="button"
                 disabled={busy}
-                onClick={send}
+                onClick={() => send(draft, "text")}
                 className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
               >
                 Send
+              </button>
+              <button
+                type="button"
+                disabled={busy || listening}
+                onClick={listen}
+                className="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-heading disabled:opacity-50"
+              >
+                {listening ? "Listening…" : "Speak"}
               </button>
             </div>
           ) : (
