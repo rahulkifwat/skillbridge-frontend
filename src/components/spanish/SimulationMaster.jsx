@@ -176,6 +176,9 @@ export default function SimulationMaster() {
               {row.mastery_status ? ` · ${row.mastery_status}` : ""}
               {row.atmosphere ? ` · ${row.atmosphere.label}` : ""}
             </p>
+            {row.academic_notice ? (
+              <p className="mt-2 text-[11px] text-muted">Classroom language practice — not a substitute for agency policy.</p>
+            ) : null}
             <button
               type="button"
               disabled={busy || !row.unlocked}

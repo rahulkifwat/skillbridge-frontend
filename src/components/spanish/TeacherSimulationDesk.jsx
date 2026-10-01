@@ -55,7 +55,12 @@ export default function TeacherSimulationDesk() {
     <section className="mt-8 rounded-2xl border border-border bg-white p-6 shadow-sm">
       <h2 className="text-lg font-bold text-heading">Spanish Simulation Master</h2>
       <p className="mt-1 text-sm text-muted">
-        Assign published scenarios, review mastery, and spot students who still need practice.
+        Assign published scenarios, review mastery, and score Law Enforcement Unit 1 with the same /20 classroom rubric.
+      </p>
+      <p className="mt-2 text-sm">
+        <a href="/spanish/programs/law" className="font-semibold text-primary">
+          Open Law Enforcement Level 1 · Unit 1
+        </a>
       </p>
       {error ? <p className="mt-3 text-sm text-amber-800">{error}</p> : null}
       {message ? <p className="mt-3 text-sm text-accent">{message}</p> : null}

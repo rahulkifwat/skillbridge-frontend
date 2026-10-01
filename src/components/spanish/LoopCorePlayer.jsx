@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 
 const SCENE = {
   medical: "from-[#0b3d4a] via-[#125c63] to-[#0e2a33]",
@@ -22,10 +22,19 @@ function speak(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
-export default function LoopCorePlayer({ lesson, onTick, onEnded, onReset }) {
+// The largest jump a single frame may advance playback. Deriving position from
+// wall-clock elapsed time meant a background tab or a long GC pause produced a
+// multi-second jump, which the anti-skip check then read as scrubbing: progress
+// was wiped and the lesson could never complete. Clamping the step means a
+// stall simply pauses the lesson, which is also the honest reading — nobody
+// watched those seconds.
+const MAX_FRAME_STEP_SEC = 0.25;
+
+export default function LoopCorePlayer({ lesson, onTick, onEnded, onReset, ref }) {
   const [playing, setPlaying] = useState(false);
   const [position, setPosition] = useState(0);
-  const startedAt = useRef(0);
+  const positionRef = useRef(0);
+  const lastFrameAt = useRef(0);
   const lastSpoken = useRef("");
   const layout = lesson?.layout;
   const duration = layout?.durationSec || 150;
@@ -36,23 +45,49 @@ export default function LoopCorePlayer({ lesson, onTick, onEnded, onReset }) {
       if (typeof window !== "undefined") window.speechSynthesis?.cancel();
       return undefined;
     }
-    startedAt.current = performance.now() - position * 1000;
+    lastFrameAt.current = performance.now();
     let frame;
-    function tick() {
-      const next = (performance.now() - startedAt.current) / 1000;
+
+    function tick(now) {
+      const delta = Math.min((now - lastFrameAt.current) / 1000, MAX_FRAME_STEP_SEC);
+      lastFrameAt.current = now;
+      const next = positionRef.current + delta;
+
       if (next >= duration) {
+        positionRef.current = duration;
         setPosition(duration);
         setPlaying(false);
         onEnded?.(duration);
         return;
       }
+
+      positionRef.current = next;
       setPosition(next);
       onTick?.(next, duration);
       frame = requestAnimationFrame(tick);
     }
+
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [playing]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, duration]);
+
+  // Lets the parent rewind the lesson. Without this the parent's anti-skip
+  // reset could not actually move the playhead, so every following frame
+  // re-triggered the reset — a request storm that only stopped on navigation.
+  useImperativeHandle(
+    ref,
+    () => ({
+      rewind() {
+        positionRef.current = 0;
+        setPosition(0);
+        setPlaying(false);
+        lastSpoken.current = "";
+        if (typeof window !== "undefined") window.speechSynthesis?.cancel();
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     if (!playing || !item?.text) return;
@@ -66,6 +101,7 @@ export default function LoopCorePlayer({ lesson, onTick, onEnded, onReset }) {
   function reset() {
     setPlaying(false);
     setPosition(0);
+    positionRef.current = 0;
     lastSpoken.current = "";
     if (typeof window !== "undefined") window.speechSynthesis?.cancel();
     onReset?.();

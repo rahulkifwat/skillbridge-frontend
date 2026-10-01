@@ -36,6 +36,11 @@ export default function SpanishProgramsView() {
                 <p className="font-semibold text-heading">{program.name}</p>
                 <p className="text-body">{program.nameEs}</p>
                 <p className="mt-1 text-xs uppercase tracking-wide text-muted">{program.status}</p>
+                {program.id === "law" ? (
+                  <Link href="/spanish/programs/law" className="mt-2 inline-block text-xs font-semibold text-primary">
+                    Open Level 1 · Unit 1
+                  </Link>
+                ) : null}
               </li>
             ))}
           </ul>

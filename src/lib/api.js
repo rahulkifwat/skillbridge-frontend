@@ -111,6 +111,12 @@ export const spanishApi = {
   learning: () => apiRequest("/spanish/learning"),
   credentials: () => apiRequest("/spanish/credentials"),
   programs: () => apiRequest("/v1/spanish/programs"),
+  lawUnit1: () => apiRequest("/v1/spanish/programs/law/units/1"),
+  lawUnit1Lesson: (lessonId) =>
+    apiRequest(`/v1/spanish/programs/law/units/1/lessons/${encodeURIComponent(lessonId)}`),
+  lawUnit1Forms: () => apiRequest("/v1/spanish/programs/law/units/1/forms"),
+  saveLawUnit1Form: (payload) =>
+    apiRequest("/v1/spanish/programs/law/units/1/forms", { method: "POST", body: payload }),
   videos: () => apiRequest("/spanish/videos"),
   videoProgress: (videoId, payload) =>
     apiRequest(`/spanish/videos/${encodeURIComponent(videoId)}/progress`, { method: "POST", body: payload }),
@@ -142,4 +148,33 @@ export const spanishApi = {
     apiRequest("/spanish/simulations/start", { method: "POST", body: { scenarioId } }),
   chooseSimulation: (runId, optionId) =>
     apiRequest(`/spanish/simulations/${runId}/choose`, { method: "POST", body: { optionId } }),
+};
+
+// Production Master Blueprint modules — SBS-2026-PRODUCTION-002.
+export const blueprintApi = {
+  modules: () => apiRequest("/blueprint/modules"),
+  module: (lessonId) => apiRequest(`/blueprint/modules/${encodeURIComponent(lessonId)}`),
+  startSession: (lessonId) =>
+    apiRequest(`/blueprint/modules/${encodeURIComponent(lessonId)}/sessions`, {
+      method: "POST",
+      body: {},
+    }),
+  session: (sessionId) => apiRequest(`/blueprint/sessions/${encodeURIComponent(sessionId)}`),
+  videoPosition: (sessionId, positionSec) =>
+    apiRequest(`/blueprint/sessions/${encodeURIComponent(sessionId)}/video-position`, {
+      method: "POST",
+      body: { positionSec },
+    }),
+  submitStage: (sessionId, stageId, payload) =>
+    apiRequest(
+      `/blueprint/sessions/${encodeURIComponent(sessionId)}/stages/${encodeURIComponent(stageId)}`,
+      { method: "POST", body: payload }
+    ),
+  review: (sessionId) =>
+    apiRequest(`/blueprint/sessions/${encodeURIComponent(sessionId)}/review`, {
+      method: "POST",
+      body: {},
+    }),
+  lmsExport: (sessionId) =>
+    apiRequest(`/blueprint/sessions/${encodeURIComponent(sessionId)}/lms-export`),
 };

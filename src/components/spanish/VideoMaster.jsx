@@ -17,6 +17,7 @@ export default function VideoMaster() {
   const [completionToken, setCompletionToken] = useState(null);
   const [unlockedIds, setUnlockedIds] = useState([]);
   const [production, setProduction] = useState(null);
+  const loopRef = useRef(null);
 
   const active = useMemo(
     () => videos.find((row) => row.videoId === activeId) || videos[0] || null,
@@ -58,10 +59,17 @@ export default function VideoMaster() {
   }
 
   function resetPlayback(reason) {
+    // Re-entry guard. A reset is in flight until the server acknowledges it,
+    // and ticks keep arriving at frame rate in the meantime; without this the
+    // first reset fans out into thousands of seek-reset posts.
+    if (programmaticRef.current) return;
+
     const node = videoRef.current;
     programmaticRef.current = true;
     lastGoodRef.current = 0;
     if (node) node.currentTime = 0;
+    // The Loop Core player owns its own playhead, so tell it to rewind too.
+    loopRef.current?.rewind();
     setCompletionToken(null);
     setResetNotice(reason);
     report("seek-reset", { position: 0, duration: active?.layout?.durationSec || 0 }).finally(() => {
@@ -99,6 +107,9 @@ export default function VideoMaster() {
   }
 
   function handleLoopTick(position, duration) {
+    // Ignore ticks emitted while a reset is still settling, exactly as the
+    // <video> path does — otherwise the rewind races its own tick stream.
+    if (programmaticRef.current) return;
     if (position > lastGoodRef.current + 1.5) {
       resetPlayback("Skipping resets this lesson. Watch from the start.");
       return;
@@ -180,6 +191,7 @@ export default function VideoMaster() {
               <LoopCorePlayer
                 key={active.videoId}
                 lesson={active}
+                ref={loopRef}
                 onTick={handleLoopTick}
                 onEnded={(duration) => handleEnded(duration)}
                 onReset={() => resetPlayback("Lesson restarted from the first phrase.")}
@@ -198,8 +210,15 @@ export default function VideoMaster() {
             >
               Continue to Simulations
             </Link>
-            {completionToken ? (
-              <p className="self-center text-sm text-accent">Lesson complete. Simulation Master is unlocked for this track.</p>
+            {/* Keyed off the unlock, not the completion token: the token only
+                exists for a lesson finished in this session, so a returning
+                learner saw an enabled button beside "finish this lesson". */}
+            {simulationReady ? (
+              <p className="self-center text-sm text-accent">
+                {completionToken
+                  ? "Lesson complete. Simulation Master is unlocked for this track."
+                  : "Lesson already complete. Simulation Master is unlocked for this track."}
+              </p>
             ) : (
               <p className="self-center text-sm text-muted">Finish this 2–3 minute lesson to enable the matching simulation.</p>
             )}
