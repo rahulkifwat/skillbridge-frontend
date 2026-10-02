@@ -49,7 +49,10 @@ export default function LoopCorePlayer({ lesson, onTick, onEnded, onReset, ref }
     let frame;
 
     function tick(now) {
-      const delta = Math.min((now - lastFrameAt.current) / 1000, MAX_FRAME_STEP_SEC);
+      // rAF's timestamp is the frame's start, which can precede the
+      // performance.now() captured just above — that produced a first report at
+      // position -0.01. Clamp the low end as well as the high.
+      const delta = Math.min(Math.max((now - lastFrameAt.current) / 1000, 0), MAX_FRAME_STEP_SEC);
       lastFrameAt.current = now;
       const next = positionRef.current + delta;
 

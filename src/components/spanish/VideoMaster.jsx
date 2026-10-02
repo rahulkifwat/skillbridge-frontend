@@ -18,6 +18,9 @@ export default function VideoMaster() {
   const [unlockedIds, setUnlockedIds] = useState([]);
   const [production, setProduction] = useState(null);
   const loopRef = useRef(null);
+  // Last seekResetCount the server reported, so a reset it made on its own is
+  // distinguishable from one we initiated.
+  const serverResetsRef = useRef(0);
 
   const active = useMemo(
     () => videos.find((row) => row.videoId === activeId) || videos[0] || null,
@@ -32,6 +35,7 @@ export default function VideoMaster() {
         setUnlockedIds(result.data.unlockedSimulationIds || []);
         setProduction(result.data.production || null);
         setActiveId(result.data.videos?.[0]?.videoId || "");
+        serverResetsRef.current = result.data.videos?.[0]?.seekResetCount || 0;
       })
       .catch((err) => setError(err.message || "Could not load Video Master lessons."));
   }, []);
@@ -46,6 +50,23 @@ export default function VideoMaster() {
       duration,
     });
     const progress = result.data.progress;
+
+    // The server runs its own anti-skip check and can reset a lesson we did not
+    // reset locally. When that happens the playhead must come back to zero too:
+    // otherwise we keep reporting from, say, 60s against a server maximum of 0,
+    // every report counts as a jump, and the pair deadlocks — the learner can
+    // never finish the lesson and nothing on screen explains why.
+    const serverReset =
+      progress.seekResetCount > serverResetsRef.current && progress.maxContinuousSec === 0;
+    serverResetsRef.current = progress.seekResetCount;
+    if (serverReset && !programmaticRef.current && event !== "seek-reset") {
+      lastGoodRef.current = 0;
+      if (node) node.currentTime = 0;
+      loopRef.current?.rewind();
+      setCompletionToken(null);
+      setResetNotice("Playback jumped ahead, so the lesson restarted. Watch from the beginning.");
+    }
+
     setVideos((current) => current.map((row) => (row.videoId === progress.videoId ? { ...row, ...progress } : row)));
     if (result.data.completionToken) {
       setCompletionToken(result.data.completionToken);
@@ -153,6 +174,7 @@ export default function VideoMaster() {
               onClick={() => {
                 setActiveId(row.videoId);
                 lastGoodRef.current = 0;
+                serverResetsRef.current = row.seekResetCount || 0;
                 setResetNotice("");
               }}
               className={`w-full rounded-xl border px-4 py-3 text-left text-sm ${
