@@ -98,7 +98,8 @@ export const dashboardApi = {
 
 export const spanishApi = {
   billing: () => apiRequest("/spanish/billing"),
-  checkout: (product) => apiRequest("/spanish/billing/checkout", { method: "POST", body: { product } }),
+  checkout: (product, returnTo) =>
+    apiRequest("/spanish/billing/checkout", { method: "POST", body: { product, returnTo } }),
   confirmCheckout: (sessionId) =>
     apiRequest(`/spanish/billing/confirm?sessionId=${encodeURIComponent(sessionId)}`),
   start: (payload) => apiRequest("/spanish/assessment/start", { method: "POST", body: payload }),

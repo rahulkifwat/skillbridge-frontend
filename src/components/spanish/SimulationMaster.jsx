@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { spanishApi } from "@/lib/api";
 import AmbientBed from "@/components/spanish/AmbientBed";
+import SpanishMembershipPaywall from "@/components/spanish/SpanishMembershipPaywall";
 
 const CATEGORY_LABEL = {
   comprehension: "Comprehension",
@@ -51,16 +52,53 @@ export default function SimulationMaster() {
   const [busy, setBusy] = useState(false);
   const [listening, setListening] = useState(false);
   const [programId, setProgramId] = useState("");
+  const [locked, setLocked] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const recognitionRef = useRef(null);
 
+  // Membership is enforced on start/retry, not on listing, so entitlements are
+  // checked up front: the paywall belongs on the page before the learner picks
+  // a scenario, not after their click is rejected.
+  const load = useCallback(
+    () =>
+      Promise.all([
+        spanishApi.masterSimulations(),
+        spanishApi.masterSimulationHistory(),
+        spanishApi.billing().catch(() => null),
+      ])
+        .then(([list, hist, billing]) => {
+          setError("");
+          setItems(list.data.simulations || []);
+          setHistory(hist.data.sessions || []);
+          if (billing) setLocked(!billing.data.membershipPaid);
+        })
+        .catch((err) => {
+          if (err?.status === 403) setLocked(true);
+          else setError(err.message || "Could not load Simulation Master.");
+        })
+        .finally(() => setLoaded(true)),
+    []
+  );
+
   useEffect(() => {
-    Promise.all([spanishApi.masterSimulations(), spanishApi.masterSimulationHistory()])
-      .then(([list, hist]) => {
-        setItems(list.data.simulations || []);
-        setHistory(hist.data.sessions || []);
-      })
-      .catch((err) => setError(err.message || "Membership is required for Simulation Master."));
-  }, []);
+    load();
+  }, [load]);
+
+  // Returning from Stripe lands here with the session id; confirm it so the
+  // entitlement is recorded even if the webhook has not arrived yet.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+    if (params.get("checkout") !== "success" || !sessionId) return;
+    spanishApi
+      .confirmCheckout(sessionId)
+      .then(() => load())
+      .catch((err) => setError(err.message || "Could not confirm your payment."))
+      .finally(() => {
+        window.history.replaceState({}, "", window.location.pathname);
+      });
+  }, [load]);
 
   async function start(id) {
     setBusy(true);
@@ -76,6 +114,11 @@ export default function SimulationMaster() {
         master_script: result.data.master_script || row?.master_script || [],
       });
     } catch (err) {
+      // Backstop: the membership may have lapsed since the page loaded.
+      if (err?.status === 403) {
+        setLocked(true);
+        return;
+      }
       setError(err.message || "Could not start this simulation.");
     } finally {
       setBusy(false);
@@ -159,12 +202,29 @@ export default function SimulationMaster() {
         </p>
       </div>
       {error ? <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-heading">{error}</p> : null}
-      <p className="text-sm">
-        <a href="/spanish/videos" className="font-semibold text-primary">
-          Open Video Master
-        </a>{" "}
-        if Start is still disabled.
-      </p>
+
+      {locked ? (
+        <SpanishMembershipPaywall
+          product="membership"
+          blurb="Simulation Master is part of the Spanish Academy membership. Unlock it to practise with the live deck, the microphone scoring, and the full scenario library."
+          unlocks={[
+            "Every Simulation Master scenario across all programs",
+            "Microphone fluency scoring and container reruns",
+            "Curriculum, progress tracking and credentials",
+          ]}
+          returnTo="/spanish/simulations"
+          onUnlocked={load}
+        />
+      ) : null}
+
+      {!locked && loaded ? (
+        <p className="text-sm">
+          <a href="/spanish/videos" className="font-semibold text-primary">
+            Open Video Master
+          </a>{" "}
+          if Start is still disabled.
+        </p>
+      ) : null}
       <ul className="grid gap-3 sm:grid-cols-2">
         {items.map((row) => (
           <li key={row.simulation_id} className="rounded-2xl border border-border bg-white p-4">
